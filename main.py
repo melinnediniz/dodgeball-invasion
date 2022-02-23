@@ -1,7 +1,9 @@
 import pygame
+import config
+
 
 pygame.init()
-COLOR_BLACK = (255, 255, 255)
+
 
 # screen
 size = (1000, 600)
@@ -13,7 +15,7 @@ game_loop = True
 game_clock = pygame.time.Clock()
 
 while game_loop:
-    screen.fill(COLOR_BLACK)
+    screen.fill(config.Config.COLOR_BLACK)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -21,6 +23,6 @@ while game_loop:
 
     # update screen
     pygame.display.flip()
-    game_clock.tick(60)
+    game_clock.tick(config.Config.CLOCK_TICK)
 
 pygame.quit()
