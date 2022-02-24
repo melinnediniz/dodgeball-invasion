@@ -2,6 +2,7 @@ import pygame
 import config
 from sys import exit
 from players import Players
+import paddle
 
 pygame.init()
 
@@ -20,6 +21,10 @@ while config.game_loop:
         if event.type == pygame.QUIT:
             config.game_loop = False
             exit()
+
+            paddle.moves()
+
+    paddle.coordinates()
 
     # drawing the objects
     screen.blit(config.Background.court, config.Background.court_cord)
