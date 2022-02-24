@@ -7,6 +7,7 @@ pygame.init()
 size = (1000, 700)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Game")
+pygame.display.set_icon(pygame.image.load('img/icon.png'))
 
 # game loop
 game_loop = True
@@ -20,6 +21,7 @@ while game_loop:
             game_loop = False
 
     # drawing the objects
+    screen.blit(config.Background.court, config.Background.court_cord)
     screen.blit(config.Players.player_1, config.Players.player_1_cord)
     screen.blit(config.Players.player_2, config.Players.player_2_cord)
     # update screen
