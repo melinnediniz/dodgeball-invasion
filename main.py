@@ -24,7 +24,7 @@ while config.game_loop:
 
             paddle.moves()
 
-    paddle.coordinates()
+    paddle.coordinates_1()
 
     # drawing the objects
     screen.blit(config.Background.court, config.Background.court_cord)
