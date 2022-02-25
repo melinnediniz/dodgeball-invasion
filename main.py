@@ -1,6 +1,6 @@
 import pygame
 import config
-from players import Players
+from players import Players, get_ball
 from ball import Ball
 
 
@@ -43,6 +43,8 @@ while config.game_loop:
                 sprite_y -= 30
             elif event.key == pygame.K_DOWN:
                 sprite_y += 30
+            elif event.key == pygame.K_SPACE:
+                get_ball(ball_1)
 
     # player 1 collision with left wall
     if sprite_x <= 0:

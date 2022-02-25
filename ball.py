@@ -2,8 +2,9 @@ import pygame
 import config
 
 
-class Ball():
+class Ball(pygame.sprite.Sprite):
     def __init__(self, position_x, position_y , ball_image):
+        pygame.sprite.Sprite.__init__(self)
         self.position_x = position_x
         self.position_y = position_y
         self.speed = config.Constants.SPEED_BALL
