@@ -27,6 +27,8 @@ ball_2 = Ball(position_x = 730,\
               position_y = 325,\
               ball_image='ball_2')
 
+# mouse invisible
+pygame.mouse.set_visible(False)
 
 while config.game_loop:
     screen.fill(config.Colors.COLOR_BLACK)
@@ -61,6 +63,13 @@ while config.game_loop:
     # player 1 collision with bottom
     if sprite_y >= 605:
         sprite_y = 605
+        
+    # scope position
+    mx, my = pygame.mouse.get_pos()
+    if mx >= 968:
+        mx = 968
+    if my >= 668:
+        my = 668
 
     # drawing the objects
     screen.blit(config.Background.court, config.Background.court_cord)
@@ -68,6 +77,7 @@ while config.game_loop:
     screen.blit(Players.player_2, Players.player_2_cord)
     ball_1.render(screen)
     ball_2.render(screen)
+    screen.blit(config.Scope.scope, (mx, my))
     # ball_1.move('player_1')
     
     # update screen
