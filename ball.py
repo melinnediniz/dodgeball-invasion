@@ -22,6 +22,3 @@ class Ball(pygame.sprite.Sprite):
 
     def render(self,surface):
         surface.blit(self.image,(self.position_x, self.position_y))
-
-
-    
