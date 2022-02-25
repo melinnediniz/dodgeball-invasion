@@ -1,6 +1,6 @@
 import pygame
 import config
-from players import Players, get_ball
+from players import Player
 from ball import Ball
 
 
@@ -15,8 +15,8 @@ pygame.display.set_icon(pygame.image.load('img/icon.png'))
 game_clock = pygame.time.Clock()
 
 # control var of sprite coordinates
-sprite_x = Players.player_1_x
-sprite_y = Players.player_1_y
+player_1 = Player(30, 300, 'player_1')
+player_2 = Player(900, 300, 'player_2')
 
 # Balls
 ball_1 = Ball(position_x = 240,\
@@ -38,31 +38,31 @@ while config.game_loop:
             config.game_loop = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                sprite_x += 30
+                player_1.position_x += 30
             elif event.key == pygame.K_LEFT:
-                sprite_x -= 30
+                player_1.position_x -= 30
             elif event.key == pygame.K_UP:
-                sprite_y -= 30
+                player_1.position_y -= 30
             elif event.key == pygame.K_DOWN:
-                sprite_y += 30
+                player_1.position_y += 30
             elif event.key == pygame.K_SPACE:
-                get_ball(ball_1)
+                player_1.get_ball(ball_1)
 
     # player 1 collision with left wall
-    if sprite_x <= 0:
-        sprite_x = 0
+    if player_1.position_x <= 0:
+        player_1.position_x = 0
 
     # player 1 collision with the middle
-    if sprite_x >= 450:
-        sprite_x = 450
+    if player_1.position_x >= 450:
+        player_1.position_x = 450
 
     # player 1 collision with the top
-    if sprite_y <= 0:
-        sprite_y = 0
+    if player_1.position_y <= 0:
+        player_1.position_y = 0
 
     # player 1 collision with bottom
-    if sprite_y >= 605:
-        sprite_y = 605
+    if player_1.position_y >= 605:
+        player_1.position_y = 605
         
     # scope position
     mx, my = pygame.mouse.get_pos()
@@ -73,8 +73,8 @@ while config.game_loop:
 
     # drawing the objects
     screen.blit(config.Background.court, config.Background.court_cord)
-    screen.blit(Players.player_1, (sprite_x, sprite_y))
-    screen.blit(Players.player_2, Players.player_2_cord)
+    player_1.render(screen)
+    player_2.render(screen)
     ball_1.render(screen)
     ball_2.render(screen)
     screen.blit(config.Scope.scope, (mx, my))
