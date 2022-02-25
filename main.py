@@ -1,6 +1,7 @@
 import pygame
 import config
 from players import Players
+from ball import Ball
 
 
 pygame.init()
@@ -16,6 +17,16 @@ game_clock = pygame.time.Clock()
 # control var of sprite coordinates
 sprite_x = Players.player_1_x
 sprite_y = Players.player_1_y
+
+# Balls
+ball_1 = Ball(position_x = 240,\
+              position_y = 325,\
+              ball_image='ball_1')
+
+ball_2 = Ball(position_x = 730,\
+              position_y = 325,\
+              ball_image='ball_2')
+
 
 while config.game_loop:
     screen.fill(config.Colors.COLOR_BLACK)
@@ -53,7 +64,10 @@ while config.game_loop:
     screen.blit(config.Background.court, config.Background.court_cord)
     screen.blit(Players.player_1, (sprite_x, sprite_y))
     screen.blit(Players.player_2, Players.player_2_cord)
-
+    ball_1.render(screen)
+    ball_2.render(screen)
+    # ball_1.move('player_1')
+    
     # update screen
     pygame.display.flip()
     game_clock.tick(config.Constants.CLOCK_TICK)

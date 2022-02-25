@@ -20,6 +20,7 @@ class Constants:
     SCREEN_WIDTH = 1000
     SCREEN_HEIGHT = 700
     SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
+    SPEED_BALL = 10
 
 
 # ------- FUNCTIONS
