@@ -78,6 +78,8 @@ while config.game_loop:
     ball_1.render(screen)
     ball_2.render(screen)
     screen.blit(config.Scope.scope, (mx, my))
+    config.display_lives(screen, config.Constants.P1_LIVE_POS, config.live_1)
+    config.display_lives(screen, config.Constants.P2_LIVE_POS, config.live_2)
     # ball_1.move('player_1')
     
     # update screen
