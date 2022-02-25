@@ -9,7 +9,10 @@ class Colors:
 class Background:
     court = pygame.image.load('img/background.png')
     court_cord = (0, 0)
-
+    
+class Scope:
+    scope = pygame.image.load('img/aim_1.png')
+    scope = pygame.transform.scale(scope, (32, 32))
 
 # Game loop variable
 game_loop = True
