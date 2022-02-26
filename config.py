@@ -3,6 +3,13 @@ import pygame
 class Colors:
     COLOR_BLACK = (0, 0, 0)
 
+class Sounds:
+    THROW_BALL = "sound/throw.ogg"
+    HIT_ET = "sound/hit_et.ogg"
+    HUMAN_WIN = "sound/victory1.ogg"
+    ET_WIN = "sound/victory2.ogg"
+    HIT_WALL = "sound/hit_wall.ogg"
+
 
 class Background:
     court = pygame.image.load('img/background.png')
@@ -35,9 +42,9 @@ class Constants:
 pygame.init()
 font = pygame.font.Font(Constants.FONT, 30)
 
-def play_sound(file):
+def play_sound(file, vol):
     sound = pygame.mixer.Sound(file)
-    sound.play()
+    sound.play().set_volume(vol)
 
 
 def display_lives(surf, position, live):
