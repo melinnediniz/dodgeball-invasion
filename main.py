@@ -78,6 +78,9 @@ while config.game_loop:
     if player_1.throw_ball:
         ball_1.move('player_1')
 
+    if player_2.throw_ball:
+        ball_2.move('player_2')
+
     # player 1 collision with left wall
     if player_1.position_x <= 0:
         player_1.position_x = 0
@@ -97,6 +100,12 @@ while config.game_loop:
     if ball_1.position_x > 1000:
         player_1.throw_ball = False
         player_1.hold()
+    
+    if ball_2.position_x < 0:
+        player_2.throw_ball = False
+        player_2.hold()
+
+    player_2.npc(enemy=player_1, ball_enemy=ball_1)
 
     # scope position
     mx, my = pygame.mouse.get_pos()

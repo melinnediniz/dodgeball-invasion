@@ -18,7 +18,8 @@ class Ball(pygame.sprite.Sprite):
     def move(self,player):
         if player == 'player_1':
             self.position_x += self.speed
-
+        elif player == 'player_2':
+            self.position_x -= self.speed
 
     def render(self,surface):
         surface.blit(self.image,(self.position_x, self.position_y))

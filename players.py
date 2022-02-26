@@ -44,3 +44,27 @@ class Player():
         
     def render(self, surface):
         surface.blit(self.image, (self.position_x, self.position_y))
+
+    def npc(self, enemy, ball_enemy):
+        movemets = dict(
+        up = lambda: self.moves('up'),
+        down = lambda: self.moves('down'),
+        right = lambda: self.moves('right'),
+        left = lambda: self.moves('left')
+        )
+        key_pressed = set()
+
+        def move_npc():
+            for move in key_pressed:
+                movemets[move]()
+        
+        if self.position_y == enemy.position_y:
+            self.throw()
+        elif self.position_y != enemy.position_y:
+            if self.position_y > enemy.position_y:
+                self.moves('up')
+            elif self.position_y < enemy.position_y:
+                self.moves('down')
+        
+        move_npc()
+        
