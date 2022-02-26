@@ -8,6 +8,7 @@ class Player():
         self.position_x = position_x
         self.position_y = position_y     
         self.holding = []
+        self.throw_ball = False
 
         if self.name == 'player_1':
             self.image = pygame.image.load('img/player_1.png')
@@ -22,8 +23,13 @@ class Player():
     def get_ball(self, ball):
         self.holding.append(ball)
         self.hold()
-   
+    
+    def throw(self):
+        self.throw_ball = True
+        return self.throw_ball
+
     def moves(self, direction):
+        self.hold()
         match direction:
             case 'up':
                 self.position_y -= config.Constants.SPEED_PLAYER
@@ -34,6 +40,5 @@ class Player():
             case 'left':
                 self.position_x -= config.Constants.SPEED_PLAYER
         
-
     def render(self, surface):
         surface.blit(self.image, (self.position_x, self.position_y))
