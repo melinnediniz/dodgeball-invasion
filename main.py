@@ -1,5 +1,7 @@
 import pygame
 import config
+from config import Constants, Sounds, Colors, Aim, Background
+from config import play_sound, display_lives, upadate_live, live_1, live_2, game_loop
 from players import Player
 from ball import Ball
 
@@ -7,7 +9,7 @@ from ball import Ball
 pygame.init()
 
 # screen
-screen = pygame.display.set_mode(config.Constants.SCREEN_SIZE)
+screen = pygame.display.set_mode(Constants.SCREEN_SIZE)
 pygame.display.set_caption("DODGEBALL INVASION")
 pygame.display.set_icon(pygame.image.load('img/icon.png'))
 
@@ -45,12 +47,12 @@ player_2.get_ball(ball_2)
 # mouse invisible
 pygame.mouse.set_visible(False)
 
-while config.game_loop:
-    screen.fill(config.Colors.COLOR_BLACK)
+while game_loop:
+    screen.fill(Colors.COLOR_BLACK)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            config.game_loop = False
+            game_loop = False
 
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
@@ -63,6 +65,7 @@ while config.game_loop:
                 key_pressed.add('down')
             elif event.key == pygame.K_SPACE:
                 player_1.throw()
+                play_sound
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_RIGHT:
@@ -115,16 +118,16 @@ while config.game_loop:
         my = 668
 
     # drawing the objects
-    screen.blit(config.Background.court, config.Background.court_cord)
+    screen.blit(Background.court, Background.court_cord)
     player_1.render(screen)
     player_2.render(screen)
     ball_1.render(screen)
     ball_2.render(screen)
-    screen.blit(config.Scope.scope, (mx-16, my-16))
-    config.display_lives(screen, config.Constants.P1_LIVE_POS, config.live_1)
-    config.display_lives(screen, config.Constants.P2_LIVE_POS, config.live_2)
+    screen.blit(Aim.scope, (mx-16, my-16))
+    display_lives(screen, Constants.P1_LIVE_POS, live_1)
+    display_lives(screen, Constants.P2_LIVE_POS, live_2)
     
     # update screen
     pygame.display.flip()
-    game_clock.tick(config.Constants.CLOCK_TICK)
+    game_clock.tick(Constants.CLOCK_TICK)
 
