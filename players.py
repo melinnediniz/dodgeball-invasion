@@ -9,6 +9,7 @@ class Player():
         self.position_y = position_y     
         self.holding = []
         self.throw_ball = False
+        self.speed = config.Constants.SPEED_PLAYER
 
         if self.name == 'player_1':
             self.image = pygame.image.load('img/player_1.png')
@@ -34,37 +35,39 @@ class Player():
 
         match direction:
             case 'up':
-                self.position_y -= config.Constants.SPEED_PLAYER
+                self.position_y -= self.speed
             case 'down':
-                self.position_y += config.Constants.SPEED_PLAYER
+                self.position_y += self.speed
             case 'right':
-                self.position_x += config.Constants.SPEED_PLAYER
+                self.position_x += self.speed
             case 'left':
-                self.position_x -= config.Constants.SPEED_PLAYER
+                self.position_x -= self.speed
         
     def render(self, surface):
         surface.blit(self.image, (self.position_x, self.position_y))
 
     def npc(self, enemy, ball_enemy):
-        movemets = dict(
-        up = lambda: self.moves('up'),
-        down = lambda: self.moves('down'),
-        right = lambda: self.moves('right'),
-        left = lambda: self.moves('left')
-        )
-        key_pressed = set()
 
         def move_npc():
-            for move in key_pressed:
-                movemets[move]()
-        
-        if self.position_y == enemy.position_y:
-            self.throw()
-        elif self.position_y != enemy.position_y:
-            if self.position_y > enemy.position_y:
-                self.moves('up')
-            elif self.position_y < enemy.position_y:
-                self.moves('down')
+            self.speed = config.Constants.SPEED_NPC
+            if not self.throw_ball:
+                if self.position_x > 500:
+                    self.moves('left')
+                if self.position_y == enemy.position_y\
+                    or self.position_y > enemy.position_y and\
+                    self.position_y < enemy.position_y + 10:
+                    self.throw()
+
+                elif self.position_y != enemy.position_y:
+                    if self.position_y > enemy.position_y:
+                        self.moves('up')
+                    elif self.position_y < enemy.position_y:
+                        self.moves('down')
+            else:
+                if self.position_x < 730:
+                    self.moves('right')
+                   
+
         
         move_npc()
         
