@@ -3,7 +3,7 @@ import config
 
 
 class Player():
-    def __init__(self, position_x, position_y , player):
+    def __init__(self, position_x, position_y, player):
         self.name = player
         self.position_x = position_x
         self.position_y = position_y     
@@ -29,7 +29,9 @@ class Player():
         return self.throw_ball
 
     def moves(self, direction):
-        self.hold()
+        if not self.throw_ball:
+            self.hold()
+
         match direction:
             case 'up':
                 self.position_y -= config.Constants.SPEED_PLAYER

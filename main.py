@@ -93,7 +93,11 @@ while config.game_loop:
     # player 1 collision with bottom
     if player_1.position_y >= 605:
         player_1.position_y = 605
-        
+
+    if ball_1.position_x > 1000:
+        player_1.throw_ball = False
+        player_1.hold()
+
     # scope position
     mx, my = pygame.mouse.get_pos()
     if mx >= 968:
