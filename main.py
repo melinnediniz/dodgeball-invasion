@@ -27,6 +27,18 @@ ball_2 = Ball(position_x = 730,\
               position_y = 325,\
               ball_image='ball_2')
 
+movemets = dict(
+        up = lambda: player_1.moves('up'),
+        down = lambda: player_1.moves('down'),
+        right = lambda: player_1.moves('right'),
+        left = lambda: player_1.moves('left')
+        )
+key_pressed = set()
+
+def move_player():
+    for move in key_pressed:
+        movemets[move]()
+    
 # mouse invisible
 pygame.mouse.set_visible(False)
 
@@ -38,16 +50,27 @@ while config.game_loop:
             config.game_loop = False
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_RIGHT:
-                player_1.position_x += 30
+                key_pressed.add('right')
             elif event.key == pygame.K_LEFT:
-                player_1.position_x -= 30
+                key_pressed.add('left')
             elif event.key == pygame.K_UP:
-                player_1.position_y -= 30
+                key_pressed.add('up')
             elif event.key == pygame.K_DOWN:
-                player_1.position_y += 30
+                key_pressed.add('down')
             elif event.key == pygame.K_SPACE:
                 player_1.get_ball(ball_1)
 
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_RIGHT:
+                key_pressed.remove('right')
+            elif event.key == pygame.K_LEFT:
+                key_pressed.remove('left')
+            elif event.key == pygame.K_UP:
+                key_pressed.remove('up')
+            elif event.key == pygame.K_DOWN:
+                key_pressed.remove('down')
+    
+    move_player()
     # player 1 collision with left wall
     if player_1.position_x <= 0:
         player_1.position_x = 0

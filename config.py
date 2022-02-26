@@ -24,6 +24,7 @@ class Constants:
     SCREEN_HEIGHT = 700
     SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
     SPEED_BALL = 10
+    SPEED_PLAYER = 10
     FONT = "fonts/dogica.ttf"
     P1_LIVE_POS = (145, 645)
     P2_LIVE_POS = (600, 25)
