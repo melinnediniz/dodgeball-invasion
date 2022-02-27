@@ -26,6 +26,7 @@ class Player():
         self.hold()
     
     def throw(self):
+        config.play_sound(config.Sounds.THROW_BALL, 0.1)
         self.throw_ball = True
         return self.throw_ball
 
@@ -51,7 +52,7 @@ class Player():
         def move_npc():
             self.speed = config.Constants.SPEED_NPC
             if not self.throw_ball:
-                if self.position_x > 500:
+                if self.position_x >= 500:
                     self.moves('left')
                 if self.position_y == enemy.position_y\
                     or self.position_y > enemy.position_y and\

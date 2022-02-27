@@ -101,7 +101,6 @@ class Game():
                 elif event.key == pygame.K_DOWN:
                     key_pressed.add('down')
                 elif event.key == pygame.K_SPACE:
-                    play_sound(Sounds.THROW_BALL, 0.1)
                     player_1.throw()
 
     
