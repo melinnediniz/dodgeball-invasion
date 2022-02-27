@@ -1,8 +1,10 @@
 import pygame
 
+
 class Colors:
-    COLOR_BLACK = (0, 0, 0)
+    BLACK = (0, 0, 0)
     GREEN = (10, 89, 31)
+
 
 class Sounds:
     THROW_BALL = "sound/throw.ogg"
@@ -17,7 +19,8 @@ class Background:
     court = pygame.image.load('img/background.png')
     court_cord = (0, 0)
     start_court = pygame.image.load('img/start_bg.png')
-    
+
+
 class Aim:
     scope = pygame.image.load('img/aim_1.png')
     scope = pygame.transform.scale(scope, (32, 32))
@@ -40,6 +43,7 @@ class Constants:
 
 # Global variables
 game_loop = True
+
 live_1 = Constants.MAX_LIVES
 live_2 = Constants.MAX_LIVES
 
@@ -47,12 +51,13 @@ live_2 = Constants.MAX_LIVES
 pygame.init()
 font = pygame.font.Font(Constants.FONT, 30)
 
+
 def play_sound(file, vol):
     sound = pygame.mixer.Sound(file)
     sound.play().set_volume(vol)
 
 
 def display_lives(surf, position, live):
-        lives_surf = font.render(f'LIVES: {live}', True, Colors.GREEN)
-        lives_rect = lives_surf.get_rect(topleft = position)
-        surf.blit(lives_surf, lives_rect)
+    lives_surf = font.render(f'LIVES: {live}', True, Colors.GREEN)
+    lives_rect = lives_surf.get_rect(topleft=position)
+    surf.blit(lives_surf, lives_rect)

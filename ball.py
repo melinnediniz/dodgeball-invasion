@@ -1,10 +1,10 @@
 import pygame
 import config
-from config import live_1
+# from config import live_1
 
 
 class Ball(pygame.sprite.Sprite):
-    def __init__(self, position_x, position_y , ball_image):
+    def __init__(self, position_x, position_y, ball_image):
         pygame.sprite.Sprite.__init__(self)
         self.position_x = position_x
         self.position_y = position_y
@@ -16,11 +16,11 @@ class Ball(pygame.sprite.Sprite):
         elif ball_image == 'ball_2':
             self.image = pygame.image.load("img/ball_2.png")
 
-    def move(self,player):
+    def move(self, player):
         if player == 'player_1':
             self.position_x += self.speed
         elif player == 'player_2':
             self.position_x -= self.speed
 
-    def render(self,surface):
-        surface.blit(self.image,(self.position_x, self.position_y))
+    def render(self, surface):
+        surface.blit(self.image, (self.position_x, self.position_y))

@@ -2,11 +2,11 @@ import pygame
 import config
 
 
-class Player():
+class Player:
     def __init__(self, position_x, position_y, player):
         self.name = player
         self.position_x = position_x
-        self.position_y = position_y     
+        self.position_y = position_y
         self.holding = []
         self.throw_ball = False
         self.speed = config.Constants.SPEED_PLAYER
@@ -17,14 +17,14 @@ class Player():
             self.image = pygame.image.load('img/player_2.png')
 
     def hold(self):
-        for object in self.holding:
-            object.position_x = self.position_x + 10
-            object.position_y = self.position_y + 30
+        for obj in self.holding:
+            obj.position_x = self.position_x + 10
+            obj.position_y = self.position_y + 30
 
     def get_ball(self, ball):
         self.holding.append(ball)
         self.hold()
-    
+
     def throw(self):
         config.play_sound(config.Sounds.THROW_BALL, 0.1)
         self.throw_ball = True
@@ -43,7 +43,7 @@ class Player():
                 self.position_x += self.speed
             case 'left':
                 self.position_x -= self.speed
-        
+
     def render(self, surface):
         surface.blit(self.image, (self.position_x, self.position_y))
 
@@ -54,9 +54,8 @@ class Player():
             if not self.throw_ball:
                 if self.position_x >= 500:
                     self.moves('left')
-                if self.position_y == enemy.position_y\
-                    or self.position_y > enemy.position_y and\
-                    self.position_y < enemy.position_y + 10:
+                if self.position_y == enemy.position_y \
+                        or enemy.position_y < self.position_y < enemy.position_y + 10:
                     self.throw()
 
                 elif self.position_y != enemy.position_y:
@@ -67,8 +66,5 @@ class Player():
             else:
                 if self.position_x < 730:
                     self.moves('right')
-                   
 
-        
         move_npc()
-        

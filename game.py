@@ -1,14 +1,14 @@
 import pygame
-from config import Constants, Sounds, Aim, Background
-from config import play_sound, display_lives, live_1, live_2, game_loop
+
+from config import Constants, Aim, Background
+from config import display_lives, live_1, live_2
 from players import Player
 from ball import Ball
 from sys import exit
 
-
 # screen
 screen = pygame.display.set_mode(Constants.SCREEN_SIZE)
-pygame.display.set_caption("DODGEBALL INVASION")
+pygame.display.set_caption("DODGE-BALL INVASION")
 pygame.display.set_icon(pygame.image.load('img/icon.png'))
 
 # control var of sprite coordinates
@@ -16,35 +16,39 @@ player_1 = Player(30, 300, 'player_1')
 player_2 = Player(900, 300, 'player_2')
 
 # Balls
-ball_1 = Ball(position_x = 240,\
-              position_y = 325,\
+ball_1 = Ball(position_x=240,
+              position_y=325,
               ball_image='ball_1')
 
-ball_2 = Ball(position_x = 730,\
-              position_y = 325,\
+ball_2 = Ball(position_x=730,
+              position_y=325,
               ball_image='ball_2')
 
-movemets = dict(
-        up = lambda: player_1.moves('up'),
-        down = lambda: player_1.moves('down'),
-        right = lambda: player_1.moves('right'),
-        left = lambda: player_1.moves('left')
-        )
+movements = dict(
+    up=lambda: player_1.moves('up'),
+    down=lambda: player_1.moves('down'),
+    right=lambda: player_1.moves('right'),
+    left=lambda: player_1.moves('left')
+)
 key_pressed = set()
+
 
 def move_player():
     for move in key_pressed:
-        movemets[move]()
+        movements[move]()
+
 
 player_1.get_ball(ball_1)
 player_2.get_ball(ball_2)
 
-def upadate_live(player):
+
+def update_live(player):
     global live_1, live_2
     if player == 1:
         live_1 -= 1
     elif player == 2:
         live_2 -= 1
+
 
 def reset_game():
     global live_1, live_2
@@ -59,10 +63,10 @@ def reset_game():
 # mouse invisible
 pygame.mouse.set_visible(False)
 
-class Game():
+
+class Game:
     def __init__(self):
         self.current_screen = "start_screen"
-
 
     def start_screen(self):
         for event in pygame.event.get():
@@ -80,7 +84,6 @@ class Game():
 
     # PLAYING THE GAME
     def main(self):
-        global live_1, live_2
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -91,7 +94,7 @@ class Game():
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_d:
-                    upadate_live(1)
+                    update_live(1)
                 elif event.key == pygame.K_RIGHT:
                     key_pressed.add('right')
                 elif event.key == pygame.K_LEFT:
@@ -103,7 +106,6 @@ class Game():
                 elif event.key == pygame.K_SPACE:
                     player_1.throw()
 
-    
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
                     key_pressed.remove('right')
@@ -113,7 +115,7 @@ class Game():
                     key_pressed.remove('up')
                 elif event.key == pygame.K_DOWN:
                     key_pressed.remove('down')
-        
+
         move_player()
         if player_1.throw_ball:
             ball_1.move('player_1')
@@ -140,7 +142,7 @@ class Game():
         if ball_1.position_x > 1000:
             player_1.throw_ball = False
             player_1.hold()
-        
+
         if ball_2.position_x < 0:
             player_2.throw_ball = False
             player_2.hold()
@@ -160,14 +162,12 @@ class Game():
         player_2.render(screen)
         ball_1.render(screen)
         ball_2.render(screen)
-        screen.blit(Aim.scope, (mx-16, my-16))
+        screen.blit(Aim.scope, (mx - 16, my - 16))
         display_lives(screen, Constants.P1_LIVE_POS, live_1)
         display_lives(screen, Constants.P2_LIVE_POS, live_2)
-        
+
         # update screen
         pygame.display.flip()
-
-
 
     def change_screen(self):
         if self.current_screen == "start_screen":
