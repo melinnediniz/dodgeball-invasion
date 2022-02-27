@@ -1,5 +1,6 @@
 import pygame
 import config
+from config import live_1
 
 
 class Ball(pygame.sprite.Sprite):
