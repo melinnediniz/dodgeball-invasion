@@ -7,6 +7,7 @@ class Colors:
 class Sounds:
     THROW_BALL = "sound/throw.ogg"
     HIT_ET = "sound/hit_et.ogg"
+    HIT_HUMAN = "sound/roblox_death_sound.ogg"
     HUMAN_WIN = "sound/victory1.ogg"
     ET_WIN = "sound/victory2.ogg"
     HIT_WALL = "sound/hit_wall.ogg"
