@@ -1,7 +1,7 @@
 import pygame
 
 from config import Constants, Aim, Background
-from config import display_lives, live_1, live_2
+from config import display_lives, update_live, reset_game
 from players import Player
 from ball import Ball
 from sys import exit
@@ -42,24 +42,6 @@ player_1.get_ball(ball_1)
 player_2.get_ball(ball_2)
 
 
-def update_live(player):
-    global live_1, live_2
-    if player == 1:
-        live_1 -= 1
-    elif player == 2:
-        live_2 -= 1
-
-
-def reset_game():
-    global live_1, live_2
-    live_1 = Constants.MAX_LIVES
-    live_2 = Constants.MAX_LIVES
-    player_1.position_x, player_1.position_y = 30, 300
-    player_2.position_x, player_2.position_y = 900, 300
-    ball_1.position_x, ball_1.position_y = 30, 325
-    ball_2.position_x, ball_2.position_y = 730, 325
-
-
 # mouse invisible
 pygame.mouse.set_visible(False)
 
@@ -90,11 +72,14 @@ class Game:
 
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.current_screen = "start_screen"
-                reset_game()
+                reset_game(player_1, player_2, ball_1, ball_2)
 
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_d:
+                # testing update lives
+                if event.key == pygame.K_1:
                     update_live(1)
+                elif event.key == pygame.K_2:
+                    update_live(2)
                 elif event.key == pygame.K_RIGHT:
                     key_pressed.add('right')
                 elif event.key == pygame.K_LEFT:
@@ -163,8 +148,8 @@ class Game:
         ball_1.render(screen)
         ball_2.render(screen)
         screen.blit(Aim.scope, (mx - 16, my - 16))
-        display_lives(screen, Constants.P1_LIVE_POS, live_1)
-        display_lives(screen, Constants.P2_LIVE_POS, live_2)
+        display_lives(screen, Constants.P1_LIVE_POS, 'player 1')
+        display_lives(screen, Constants.P2_LIVE_POS, 'player 2')
 
         # update screen
         pygame.display.flip()

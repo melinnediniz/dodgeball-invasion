@@ -58,6 +58,28 @@ def play_sound(file, vol):
 
 
 def display_lives(surf, position, live):
+    if live == 'player 1':
+        live = live_1
+    elif live == 'player 2':
+        live = live_2
     lives_surf = font.render(f'LIVES: {live}', True, Colors.GREEN)
     lives_rect = lives_surf.get_rect(topleft=position)
     surf.blit(lives_surf, lives_rect)
+
+
+def update_live(player):
+    global live_1, live_2
+    if player == 1:
+        live_1 -= 1
+    elif player == 2:
+        live_2 -= 1
+
+
+def reset_game(player_1, player_2, ball_1, ball_2):
+    global live_1, live_2
+    live_1 = Constants.MAX_LIVES
+    live_2 = Constants.MAX_LIVES
+    player_1.position_x, player_1.position_y = 30, 300
+    player_2.position_x, player_2.position_y = 900, 300
+    ball_1.position_x, ball_1.position_y = 30, 325
+    ball_2.position_x, ball_2.position_y = 730, 325
