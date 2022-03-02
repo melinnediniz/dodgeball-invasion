@@ -109,8 +109,9 @@ class Game:
         # ball collision with player_1
         if ball_2.position_x <= player_1.position_x:
             if player_1.position_x < ball_2.position_x + collision:
-                ball_2.position_x = player_1.position_x
-                ball_2.position_y = player_1.position_y
+                player_2.hold()
+                player_2.throw_ball = False
+
 
         # player 1 collision with left wall
         if player_1.position_x <= 0:
