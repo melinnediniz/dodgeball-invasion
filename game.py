@@ -14,6 +14,8 @@ pygame.display.set_icon(pygame.image.load('img/icon.png'))
 # control var of sprite coordinates
 player_1 = Player(30, 300, 'player_1')
 player_2 = Player(900, 300, 'player_2')
+collision = 50
+
 
 # Balls
 ball_1 = Ball(position_x=240,
@@ -70,10 +72,6 @@ class Game:
             if event.type == pygame.QUIT:
                 exit()
 
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                self.current_screen = "start_screen"
-                reset_game(player_1, player_2, ball_1, ball_2)
-
             if event.type == pygame.KEYDOWN:
                 # testing update lives
                 if event.key == pygame.K_1:
@@ -107,6 +105,12 @@ class Game:
 
         if player_2.throw_ball:
             ball_2.move('player_2')
+
+        # ball collision with player_1
+        if ball_2.position_x <= player_1.position_x:
+            if player_1.position_x < ball_2.position_x + collision:
+                ball_2.position_x = player_1.position_x
+                ball_2.position_y = player_1.position_y
 
         # player 1 collision with left wall
         if player_1.position_x <= 0:
