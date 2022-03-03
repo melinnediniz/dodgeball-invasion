@@ -29,9 +29,7 @@ class Aim:
 # Constants
 class Constants:
     CLOCK_TICK = 60
-    SCREEN_WIDTH = 1000
-    SCREEN_HEIGHT = 700
-    SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
+    SCREEN_SIZE = (1000, 700)
     SPEED_BALL = 25
     SPEED_PLAYER = 8
     SPEED_NPC = 14
@@ -54,7 +52,8 @@ font = pygame.font.Font(Constants.FONT, 30)
 
 def play_sound(file, vol):
     sound = pygame.mixer.Sound(file)
-    sound.play().set_volume(vol)
+    sound.set_volume(vol)
+    sound.play()
 
 
 def display_lives(surf, position, live):
@@ -71,8 +70,10 @@ def update_live(player):
     global live_1, live_2
     if player == 1 and live_1 > 0:
         live_1 -= 1
+        play_sound(Sounds.HIT_HUMAN, 0.04)
     elif player == 2 and live_2 > 0:
         live_2 -= 1
+        play_sound(Sounds.HIT_ET, 0.04)
 
 
 def reset_game(player_1, player_2, ball_1, ball_2):

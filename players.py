@@ -16,6 +16,24 @@ class Player:
         if self.name == 'player_2':
             self.image = pygame.image.load('img/player_2.png')
 
+    
+    def wall_limits(self):
+        # player 1 collision with left wall
+        if self.position_x <= 0:
+            self.position_x = 0
+
+        # player 1 collision with the middle
+        if self.position_x >= 450:
+            self.position_x = 450
+
+        # player 1 collision with the top
+        if self.position_y <= 0:
+            self.position_y = 0
+
+        # player 1 collision with bottom
+        if self.position_y >= 605:
+            self.position_y = 605
+
     def hold(self):
         for obj in self.holding:
             obj.position_x = self.position_x + 10

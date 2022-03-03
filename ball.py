@@ -16,6 +16,7 @@ class Ball(pygame.sprite.Sprite):
         elif ball_image == 'ball_2':
             self.image = pygame.image.load("img/ball_2.png")
 
+
     def move(self, player):
         if player == 'player_1':
             self.position_x += self.speed
