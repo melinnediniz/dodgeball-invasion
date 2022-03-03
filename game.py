@@ -109,7 +109,15 @@ class Game:
                     update_live(1)
                     player_2.hold()
                     player_2.throw_ball = False
-
+                    
+        # ball collision with player_2 (npc)
+        if ball_1.position_x > player_2.position_x:
+            if player_2.position_y < ball_1.position_y + collision:
+                if player_2.position_y + collision > ball_1.position_y:
+                    play_sound(Sounds.HIT_ET, 0.05)
+                    update_live(1)
+                    player_1.hold()
+                    player_1.throw_ball = False
 
         # player 1 collision with left wall
         if player_1.position_x <= 0:
