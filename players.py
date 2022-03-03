@@ -26,7 +26,7 @@ class Player:
         self.hold()
 
     def throw(self):
-        config.play_sound(config.Sounds.THROW_BALL, 0.1)
+        config.play_sound(config.Sounds.THROW_BALL, 0.07)
         self.throw_ball = True
         return self.throw_ball
 

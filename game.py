@@ -1,6 +1,6 @@
 import pygame
 
-from config import Constants, Aim, Background
+from config import Constants, Aim, Background, Sounds, play_sound
 from config import display_lives, update_live, reset_game
 from players import Player
 from ball import Ball
@@ -73,12 +73,7 @@ class Game:
                 exit()
 
             if event.type == pygame.KEYDOWN:
-                # testing update lives
-                if event.key == pygame.K_1:
-                    update_live(1)
-                elif event.key == pygame.K_2:
-                    update_live(2)
-                elif event.key == pygame.K_RIGHT:
+                if event.key == pygame.K_RIGHT:
                     key_pressed.add('right')
                 elif event.key == pygame.K_LEFT:
                     key_pressed.add('left')
@@ -110,8 +105,10 @@ class Game:
         if ball_2.position_x <= player_1.position_x:
             if player_1.position_y < ball_2.position_y + collision:
                 if player_1.position_y + collision > ball_2.position_y:
-                       player_2.hold()
-                       player_2.throw_ball = False
+                    play_sound(Sounds.HIT_HUMAN, 0.05)
+                    update_live(1)
+                    player_2.hold()
+                    player_2.throw_ball = False
 
 
         # player 1 collision with left wall

@@ -69,9 +69,9 @@ def display_lives(surf, position, live):
 
 def update_live(player):
     global live_1, live_2
-    if player == 1:
+    if player == 1 and live_1 > 0:
         live_1 -= 1
-    elif player == 2:
+    elif player == 2 and live_2 > 0:
         live_2 -= 1
 
 
