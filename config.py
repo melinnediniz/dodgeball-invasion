@@ -39,6 +39,7 @@ class Constants:
     P1_LIVE_POS = (145, 645)
     P2_LIVE_POS = (600, 25)
     MAX_LIVES = 10
+    DAMAGE = 1
 
 
 # Global variables
@@ -69,11 +70,21 @@ def display_lives(surf, position, live):
 
 def update_live(player):
     global live_1, live_2
-    if player == 1:
-        live_1 -= 1
-    elif player == 2:
-        live_2 -= 1
+    if player == 1 and live_1 > 0:
+            live_1 -= Constants.DAMAGE
+    elif player == 2 and live_2 > 0:
+            live_2 -= Constants.DAMAGE
 
+def loser():
+    loser = 0
+    global live_1, live_2
+    if live_1 == 0:
+        loser = 1
+        print('player 2 win')
+    elif live_2 == 0:
+        loser = 2
+        print('player 1 win')
+    return loser
 
 def reset_game(player_1, player_2, ball_1, ball_2):
     global live_1, live_2

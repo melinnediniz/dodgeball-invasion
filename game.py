@@ -1,7 +1,7 @@
 import pygame
 
-from config import Constants, Aim, Background
-from config import display_lives, update_live, reset_game
+from config import Constants, Aim, Background, Sounds, play_sound
+from config import display_lives, update_live, reset_game, loser
 from players import Player
 from ball import Ball
 from sys import exit
@@ -68,6 +68,8 @@ class Game:
 
     # PLAYING THE GAME
     def main(self):
+        global live_1, live_2
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -110,8 +112,15 @@ class Game:
         if ball_2.position_x <= player_1.position_x:
             if player_1.position_y < ball_2.position_y + collision:
                 if player_1.position_y + collision > ball_2.position_y:
-                       player_2.hold()
-                       player_2.throw_ball = False
+                    if loser():
+                        play_sound(Sounds.ET_WIN, 0.6)
+                        self.current_screen = "start_screen"
+                        reset_game(player_1, player_2, ball_1, ball_2)
+                    else:
+                        update_live(1)
+                        play_sound(Sounds.HIT_HUMAN, 0.1)
+                        player_2.hold()
+                        player_2.throw_ball = False
 
 
         # player 1 collision with left wall
