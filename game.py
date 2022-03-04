@@ -1,7 +1,7 @@
 import pygame
 
-from config import Constants, Aim, Background, Sounds, play_sound
-from config import display_lives, update_live, reset_game
+from config import Constants, Aim, Background
+from config import display_lives, update_live
 from players import Player
 from ball import Ball
 from sys import exit
@@ -63,7 +63,7 @@ class Game:
                 elif event.key == pygame.K_ESCAPE:
                     exit()
 
-        screen.blit(Background.start_court, Background.court_cord)
+        screen.blit(Background.menu_court, Background.court_cord)
         pygame.display.flip()
 
     # PLAYING THE GAME

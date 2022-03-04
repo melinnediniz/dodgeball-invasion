@@ -18,7 +18,7 @@ class Sounds:
 class Background:
     court = pygame.image.load('img/background.png')
     court_cord = (0, 0)
-    start_court = pygame.image.load('img/start_bg.png')
+    menu_court = pygame.image.load('img/menu.png')
 
 
 class Aim:
@@ -34,8 +34,8 @@ class Constants:
     SPEED_PLAYER = 8
     SPEED_NPC = 14
     FONT = "fonts/dogica.ttf"
-    P1_LIVE_POS = (145, 645)
-    P2_LIVE_POS = (600, 25)
+    P1_LIVE_POS = (110, 645)
+    P2_LIVE_POS = (600, 75)
     MAX_LIVES = 10
 
 
@@ -70,7 +70,7 @@ def update_live(player):
     global live_1, live_2
     if player == 1 and live_1 > 0:
         live_1 -= 1
-        play_sound(Sounds.HIT_HUMAN, 0.04)
+        play_sound(Sounds.HIT_HUMAN, 0.07)
     elif player == 2 and live_2 > 0:
         live_2 -= 1
         play_sound(Sounds.HIT_ET, 0.04)
