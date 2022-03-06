@@ -74,6 +74,12 @@ class Game:
             if event.type == pygame.QUIT:
                 exit()
 
+            if event.type == pygame.USEREVENT+1: 
+                if player_1.hit == True:
+                    player_1.hit = False
+                elif player_2.hit == True:
+                    player_2.hit = False
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RIGHT:
                     key_pressed.add('right')
@@ -107,17 +113,23 @@ class Game:
         if ball_2.position_x <= player_1.position_x:
             if player_1.position_y < ball_2.position_y + collision:
                 if player_1.position_y + collision > ball_2.position_y:
+                    player_1.hit = True
                     update_live(1)
                     player_2.hold()
                     player_2.throw_ball = False
+                    pygame.time.set_timer(pygame.USEREVENT+1, 300)
+
                     
         # ball collision with player_2 (npc)
         if ball_1.position_x > player_2.position_x:
             if player_2.position_y < ball_1.position_y + collision_2:
                 if player_2.position_y + collision_2 > ball_1.position_y:
+                    player_2.hit = True
                     update_live(2)
                     player_1.hold()
                     player_1.throw_ball = False
+                    pygame.time.set_timer(pygame.USEREVENT+1, 300)
+
 
         player_1.wall_limits()
 

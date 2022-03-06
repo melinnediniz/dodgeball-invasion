@@ -10,12 +10,14 @@ class Player:
         self.holding = []
         self.throw_ball = False
         self.speed = config.Constants.SPEED_PLAYER
+        self.hit = False
 
         if self.name == 'player_1':
             self.image = Images.player_1
+            self.image_hit = Images.player_1_hit
         if self.name == 'player_2':
             self.image = Images.player_2
-
+            self.image_hit = Images.player_2_hit
     
     def wall_limits(self):
         # player 1 collision with left wall
@@ -63,7 +65,11 @@ class Player:
                 self.position_x -= self.speed
 
     def render(self, surface):
-        surface.blit(self.image, (self.position_x, self.position_y))
+        if not self.hit:
+            surface.blit(self.image, (self.position_x, self.position_y))
+        else:
+            surface.blit(self.image_hit, (self.position_x, self.position_y))
+
 
     def npc(self, enemy, ball_enemy):
 

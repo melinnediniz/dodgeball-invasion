@@ -28,7 +28,10 @@ class Images:
     ball_2 = pygame.image.load("img/ball_2.png")
 
     player_1 = pygame.image.load('img/player_1.png')
+    player_1_hit = pygame.image.load('img/player_1_hit.png')
+
     player_2 = pygame.image.load('img/player_2.png')
+    player_2_hit= pygame.image.load('img/player_2_hit.png')
 
 
 class Aim:
