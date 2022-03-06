@@ -137,6 +137,7 @@ class Game:
 
 
         player_1.wall_limits()
+        player_2.wall_limits()
 
         if ball_1.position_x > 1000:
             player_1.throw_ball = False

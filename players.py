@@ -20,21 +20,33 @@ class Player:
             self.image_hit = Images.player_2_hit
     
     def wall_limits(self):
-        # player 1 collision with left wall
-        if self.position_x <= 0:
-            self.position_x = 0
 
-        # player 1 collision with the middle
-        if self.position_x >= 450:
-            self.position_x = 450
-
-        # player 1 collision with the top
+        # player collision with the top
         if self.position_y <= 0:
             self.position_y = 0
 
-        # player 1 collision with bottom
+        # player collision with bottom
         if self.position_y >= 605:
             self.position_y = 605
+        
+        if self.name == 'player_1':
+            # player 1 collision with left wall
+            if self.position_x <= 0:
+                self.position_x = 0
+            
+            
+            # player 1 collision with the middle
+            if self.position_x >= 450:
+                self.position_x = 450
+
+        if self.name == 'player_2':
+            # player 2 collision with right wall
+            if self.position_x >= 1000:
+                self.position_x = 1000
+
+            # player 2 collision with the middle
+            if self.position_x <= 550:
+                self.position_x = 550
 
     def hold(self):
         for obj in self.holding:
@@ -53,7 +65,7 @@ class Player:
     def moves(self, direction):
         if not self.throw_ball:
             self.hold()
-
+        print(self.position_y)
         match direction:
             case 'up':
                 self.position_y -= self.speed
@@ -75,11 +87,13 @@ class Player:
 
         def move_npc():
             self.speed = config.Constants.SPEED_NPC
+            
             if not self.throw_ball:
+                
                 if self.position_x >= 500:
                     self.moves('left')
                 if self.position_y == enemy.position_y \
-                        or enemy.position_y < self.position_y < enemy.position_y + 10:
+                    or enemy.position_y < self.position_y < enemy.position_y + 15:
                     self.throw()
 
                 elif self.position_y != enemy.position_y:
@@ -88,7 +102,13 @@ class Player:
                     elif self.position_y < enemy.position_y:
                         self.moves('down')
             else:
-                if self.position_x < 730:
-                    self.moves('right')
 
+                if self.position_y > enemy.position_y:
+                        self.moves('down')
+                elif self.position_y < enemy.position_y:
+                        self.moves('up')
+
+                if self.position_x < 800:
+                    self.moves('right')
+                    
         move_npc()
