@@ -1,6 +1,6 @@
 import pygame
 
-from config import Constants, Aim, Background
+from config import Constants, Aim, Images
 from config import display_lives, update_live
 from players import Player
 from ball import Ball
@@ -63,7 +63,7 @@ class Game:
                 elif event.key == pygame.K_ESCAPE:
                     exit()
 
-        screen.blit(Background.menu_court, Background.court_cord)
+        screen.blit(Images.menu, Constants.COURT_CORD)
         pygame.display.flip()
 
     # PLAYING THE GAME
@@ -137,14 +137,14 @@ class Game:
             my = 668
 
         # drawing the objects
-        screen.blit(Background.court, Background.court_cord)
+        screen.blit(Images.court, Constants.COURT_CORD)
+        screen.blit(Aim.scope, (mx - 16, my - 16))
+        display_lives(screen, Constants.P1_LIVE_POS, 'player 1')
+        display_lives(screen, Constants.P2_LIVE_POS, 'player 2')
         player_1.render(screen)
         player_2.render(screen)
         ball_1.render(screen)
         ball_2.render(screen)
-        screen.blit(Aim.scope, (mx - 16, my - 16))
-        display_lives(screen, Constants.P1_LIVE_POS, 'player 1')
-        display_lives(screen, Constants.P2_LIVE_POS, 'player 2')
 
         # update screen
         pygame.display.flip()
