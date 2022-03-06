@@ -10,14 +10,6 @@
 
 ###### DODGEBALL INVASION é um jogo desenvolvido 100% na linguagem [Python](https://www.python.org/) utilizando a biblioteca ``pygame``. Feito exclusivamente para obtenção de nota na disciplina de Laboratório de Programação.
 
-### Ajustes e melhorias
-
-O projeto ainda está **em desenvolvimento** e as próximas atualizações serão voltadas nas seguintes tarefas:
-
-- [ ] Desenvolver a interface base do jogo ``40%``
-- [ ] Aprimorar mecânicas básicas ``30%``
-- [ ] Estruturar o código ``60%``
-
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
@@ -58,10 +50,11 @@ $ python main.py
 
 ### Controles 🕹️
 
-|  Player 1     | Player 2      |Direções  |
-| ------------- | ------------- | -------- |
-| W             | Up    ↑       |   Cima   |
-| S             | Down  ↓       |  Baixo   |
+|  Player 1     |Comandos  |
+| ------------- | -------- |
+| Up            |   Cima   |
+| Down          |  Baixo   |
+| Espaço        |  Atirar  |
 
 ## 🤝 Colaboradores
 
