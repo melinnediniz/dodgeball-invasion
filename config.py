@@ -14,6 +14,7 @@ class Sounds:
     HUMAN_WIN = "sound/victory1.ogg"
     ET_WIN = "sound/victory2.ogg"
     HIT_WALL = "sound/hit_wall.ogg"
+    BACKGROUND = "sound/music/pika-a-boo_8bit.mp3"
 
 
 class Images:
@@ -68,9 +69,15 @@ font = pygame.font.Font(Lives.FONT, 45)
 
 
 def play_sound(file, vol):
-    sound = pygame.mixer.Sound(file)
-    sound.set_volume(vol)
-    sound.play()
+        sound = pygame.mixer.Sound(file)
+        sound.set_volume(vol)
+        sound.play()
+
+def play_music():
+        pygame.mixer.init()
+        pygame.mixer.music.load(Sounds.BACKGROUND)
+        pygame.mixer.music.play(-1)
+        pygame.mixer.music.set_volume(0.2)
 
 
 def display_lives(surf, position, live):
@@ -91,10 +98,10 @@ def update_live(player):
     global live_1, live_2
     if player == 1 and live_1 > 0:
         live_1 -= 1
-        play_sound(Sounds.HIT_HUMAN, 0.07)
+        play_sound(Sounds.HIT_HUMAN, 0.2)
     elif player == 2 and live_2 > 0:
         live_2 -= 1
-        play_sound(Sounds.HIT_ET, 0.04)
+        play_sound(Sounds.HIT_ET, 0.1)
 
 
 def reset_game(player_1, player_2, ball_1, ball_2):

@@ -1,5 +1,5 @@
 import config
-from config import Images
+from config import Images, Constants, Sounds, play_sound
 
 
 class Player:
@@ -9,7 +9,7 @@ class Player:
         self.position_y = position_y
         self.holding = []
         self.throw_ball = False
-        self.speed = config.Constants.SPEED_PLAYER
+        self.speed = Constants.SPEED_PLAYER
 
         if self.name == 'player_1':
             self.image = Images.player_1
@@ -44,7 +44,7 @@ class Player:
         self.hold()
 
     def throw(self):
-        config.play_sound(config.Sounds.THROW_BALL, 0.07)
+        play_sound(Sounds.THROW_BALL, 0.07)
         self.throw_ball = True
         return self.throw_ball
 

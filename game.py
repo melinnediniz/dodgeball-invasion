@@ -1,7 +1,7 @@
 import pygame
 
 from config import Constants, Aim, Images, Lives
-from config import display_lives, update_live
+from config import display_lives, update_live, play_music
 from players import Player
 from ball import Ball
 from sys import exit
@@ -48,6 +48,7 @@ player_2.get_ball(ball_2)
 # mouse invisible
 pygame.mouse.set_visible(False)
 
+play_music()
 
 class Game:
     def __init__(self):
@@ -85,6 +86,10 @@ class Game:
                     key_pressed.add('down')
                 elif event.key == pygame.K_SPACE:
                     player_1.throw()
+                elif event.key == pygame.K_m and pygame.mixer.music.get_busy() == True:
+                        pygame.mixer.music.pause()
+                elif event.key == pygame.K_m and pygame.mixer.music.get_busy() == False:
+                        pygame.mixer.music.unpause()
 
             if event.type == pygame.KEYUP:
                 if event.key == pygame.K_RIGHT:
