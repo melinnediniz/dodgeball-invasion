@@ -5,6 +5,7 @@ class Colors:
     BLACK = (0, 0, 0)
     GREEN = (10, 89, 31)
     WHITE = (255, 255, 255)
+    PLAYER = (196, 70, 20)
 
 
 class Sounds:
@@ -13,7 +14,6 @@ class Sounds:
     HIT_HUMAN = "sound/roblox_death_sound.ogg"
     HUMAN_WIN = "sound/victory1.ogg"
     ET_WIN = "sound/victory2.ogg"
-    HIT_WALL = "sound/hit_wall.ogg"
     BACKGROUND = "sound/music/pika-a-boo_8bit.mp3"
 
 
@@ -23,7 +23,9 @@ class Images:
     icon = pygame.image.load('img/icon.png')
 
     heart = pygame.image.load('img/heart.png')
+    heart_et = pygame.image.load('img/et_heart.png')
     heart = pygame.transform.scale(heart, (65, 65))
+    heart_et = pygame.transform.scale(heart_et, (65, 65))
 
     ball_1 = pygame.image.load("img/ball_1.png")
     ball_2 = pygame.image.load("img/ball_2.png")
@@ -55,7 +57,10 @@ class Constants:
 class Lives:
     FONT = "fonts/NormandyBeach.otf"
     P1_LIVE_POS = (120, 630)
-    P2_LIVE_POS = (770, 80)
+    P2_LIVE_POS = (780, 95)
+
+    p1_heart_pos = (45, 615)
+    p2_heart_pos = (830, 75)
     MAX_LIVES = 10
     heart_pos = (0, 0)
 
@@ -67,8 +72,10 @@ live_1 = Lives.MAX_LIVES
 live_2 = Lives.MAX_LIVES
 
 # ------- FUNCTIONS
+
 pygame.init()
-font = pygame.font.Font(Lives.FONT, 45)
+font_live = pygame.font.Font(Lives.FONT, 45)
+font_name = pygame.font.Font(Lives.FONT, 30)
 
 
 def play_sound(file, vol):
@@ -85,16 +92,30 @@ def play_music():
 
 def display_lives(surf, position, live):
     heart_surf = Images.heart
+    name = ''
+    text_pos = ()
+    
     if live == 'player 1':
         live = live_1
-        Lives.heart_pos = (45, 615)
+        name = 'HUMAN'
+        Lives.heart_pos = Lives.p1_heart_pos
+        text_pos = (120, 600)
     elif live == 'player 2':
+        heart_surf = Images.heart_et
         live = live_2
-        Lives.heart_pos = (820, 75)
-    surf.blit(heart_surf, Lives.heart_pos)
-    lives_surf = font.render(f'{live}', True, Colors.WHITE)
+        name = 'ALIEN'
+        text_pos = (745, 70)
+        Lives.heart_pos = Lives.p2_heart_pos
+
+    player_surf = font_name.render(name, True, Colors.PLAYER)
+    player_rect = player_surf.get_rect(topleft=text_pos)
+
+    lives_surf = font_live.render(f'{live}', True, Colors.WHITE)
     lives_rect = lives_surf.get_rect(topleft=position)
+
     surf.blit(lives_surf, lives_rect)
+    surf.blit(player_surf, player_rect)
+    surf.blit(heart_surf, Lives.heart_pos)
 
 
 def update_live(player):
