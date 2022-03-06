@@ -1,5 +1,6 @@
 import pygame
 
+import config
 from config import Constants, Aim, Images, Lives
 from config import display_lives, update_live, play_music
 from players import Player
@@ -123,6 +124,9 @@ class Game:
                     player_2.hold()
                     player_2.throw_ball = False
                     pygame.time.set_timer(pygame.USEREVENT+1, 300)
+                    if config.live_1 == 8:
+                        config.victory_alien = True
+                        config.victory_1()
 
                     
         # ball collision with player_2 (npc)
@@ -134,7 +138,9 @@ class Game:
                     player_1.hold()
                     player_1.throw_ball = False
                     pygame.time.set_timer(pygame.USEREVENT+1, 300)
-
+                    if config.live_2 == 8:
+                        config.victory_human = True
+                        config.victory_2()
 
         player_1.wall_limits()
         player_2.wall_limits()

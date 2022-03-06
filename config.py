@@ -1,10 +1,12 @@
 import pygame
+import game
 
 
 class Colors:
     BLACK = (0, 0, 0)
     GREEN = (10, 89, 31)
     WHITE = (255, 255, 255)
+    BLUE = (0, 110, 230)
 
 
 class Sounds:
@@ -50,6 +52,7 @@ class Constants:
     SPEED_NPC = 14
 
     COURT_CORD = (0, 0)
+    FONT_2 = "fonts/INVASION2000.ttf"
 
 
 class Lives:
@@ -62,13 +65,18 @@ class Lives:
 
 # Global variables
 game_loop = True
-
+victory_alien = True
+victory_human = True
+count = True
 live_1 = Lives.MAX_LIVES
 live_2 = Lives.MAX_LIVES
+count_down = 5
 
 # ------- FUNCTIONS
 pygame.init()
 font = pygame.font.Font(Lives.FONT, 45)
+font_2 = pygame.font.Font(Constants.FONT_2, 64)
+font_3 = pygame.font.Font(Constants.FONT_2, 18)
 
 
 def play_sound(file, vol):
@@ -81,6 +89,73 @@ def play_music():
         pygame.mixer.music.load(Sounds.BACKGROUND)
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.2)
+
+
+def victory_1():
+    global victory_alien
+    while victory_alien:
+        endgame2()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    reset_game()
+                    pygame.time.wait(500)
+                    victory_alien = False
+                elif event.key == pygame.K_ESCAPE:
+                    exit()
+
+
+def victory_2():
+    global victory_human
+    while victory_human:
+        endgame1()
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    reset_game()
+                    pygame.time.wait(500)
+                    victory_human = False
+                elif event.key == pygame.K_ESCAPE:
+                    exit()
+            if event.type == pygame.QUIT:
+                exit()
+
+
+def endgame1():
+    lock()
+    victory_h()
+    restart()
+    pygame.display.flip()
+
+
+def endgame2():
+    lock()
+    victory_a()
+    restart()
+    pygame.display.flip()
+
+
+def victory_h():
+    human_text = font_2.render('HUMAN WINS', True, Colors.BLUE)
+    human_text_rect = human_text.get_rect()
+    human_text_rect.center = (1000/2, 700/2)
+    game.screen.blit(human_text, human_text_rect)
+
+
+def victory_a():
+    alien_text = font_2.render('ALIEN WINS', True, Colors.GREEN)
+    alien_text_rect = alien_text.get_rect()
+    alien_text_rect.center = (1000/2, 700/2)
+    game.screen.blit(alien_text, alien_text_rect)
+
+
+def restart():
+    restart_text = font_3.render('Press R To Restart or Esc to Finish', True, Colors.BLACK)
+    restart_text_rect = restart_text.get_rect()
+    restart_text_rect.center = (1000/2, 530)
+    game.screen.blit(restart_text, restart_text_rect)
 
 
 def display_lives(surf, position, live):
@@ -97,6 +172,15 @@ def display_lives(surf, position, live):
     surf.blit(lives_surf, lives_rect)
 
 
+def lock():
+    game.screen.blit(Images.court, Constants.COURT_CORD)
+    pygame.mouse.set_visible(True)
+    display_lives(game.screen, Lives.P1_LIVE_POS, 'player 1')
+    display_lives(game.screen, Lives.P2_LIVE_POS, 'player 2')
+    game.player_1.render(game.screen)
+    game.player_2.render(game.screen)
+
+
 def update_live(player):
     global live_1, live_2
     if player == 1 and live_1 > 0:
@@ -107,11 +191,12 @@ def update_live(player):
         play_sound(Sounds.HIT_ET, 0.1)
 
 
-def reset_game(player_1, player_2, ball_1, ball_2):
+def reset_game():
     global live_1, live_2
     live_1 = Lives.MAX_LIVES
     live_2 = Lives.MAX_LIVES
-    player_1.position_x, player_1.position_y = 30, 300
-    player_2.position_x, player_2.position_y = 900, 300
-    ball_1.position_x, ball_1.position_y = 30, 325
-    ball_2.position_x, ball_2.position_y = 730, 325
+    game.player_1.position_x, game.player_1.position_y = 30, 300
+    game.player_2.position_x, game.player_2.position_y = 900, 300
+    game.ball_1.position_x, game.ball_1.position_y = 30, 325
+    game.ball_2.position_x, game.ball_2.position_y = 730, 325
+    pygame.display.flip()
