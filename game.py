@@ -67,7 +67,8 @@ class Game:
         pygame.display.flip()
 
     # PLAYING THE GAME
-    def main(self):
+    @staticmethod
+    def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()

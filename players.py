@@ -1,4 +1,3 @@
-import pygame
 import config
 from config import Images
 
