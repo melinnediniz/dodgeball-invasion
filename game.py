@@ -131,7 +131,8 @@ class Game:
         player_2.npc(enemy=player_1, ball_enemy=ball_1)
 
         # scope position
-        mx, my = pygame.mouse.get_pos()
+        mx = player_1.position_x + 100
+        my = player_2.position_y + 50
         if mx >= 968:
             mx = 968
         if my >= 668:
