@@ -1,5 +1,6 @@
 import pygame
 import config
+from config import Images
 
 
 class Player:
@@ -12,9 +13,9 @@ class Player:
         self.speed = config.Constants.SPEED_PLAYER
 
         if self.name == 'player_1':
-            self.image = pygame.image.load('img/player_1.png')
+            self.image = Images.player_1
         if self.name == 'player_2':
-            self.image = pygame.image.load('img/player_2.png')
+            self.image = Images.player_2
 
     
     def wall_limits(self):

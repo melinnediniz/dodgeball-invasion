@@ -19,8 +19,16 @@ class Sounds:
 class Images:
     court = pygame.image.load('img/background.png')
     menu = pygame.image.load('img/menu.png')
+    icon = pygame.image.load('img/icon.png')
+
     heart = pygame.image.load('img/heart.png')
     heart = pygame.transform.scale(heart, (65, 65))
+
+    ball_1 = pygame.image.load("img/ball_1.png")
+    ball_2 = pygame.image.load("img/ball_2.png")
+
+    player_1 = pygame.image.load('img/player_1.png')
+    player_2 = pygame.image.load('img/player_2.png')
 
 
 class Aim:
@@ -36,24 +44,27 @@ class Constants:
     SPEED_BALL = 25
     SPEED_PLAYER = 8
     SPEED_NPC = 14
-    
+
+    COURT_CORD = (0, 0)
+
+
+class Lives:
     FONT = "fonts/NormandyBeach.otf"
     P1_LIVE_POS = (120, 630)
     P2_LIVE_POS = (770, 80)
     MAX_LIVES = 10
     heart_pos = (0, 0)
 
-    COURT_CORD = (0, 0)
 
 # Global variables
 game_loop = True
 
-live_1 = Constants.MAX_LIVES
-live_2 = Constants.MAX_LIVES
+live_1 = Lives.MAX_LIVES
+live_2 = Lives.MAX_LIVES
 
 # ------- FUNCTIONS
 pygame.init()
-font = pygame.font.Font(Constants.FONT, 45)
+font = pygame.font.Font(Lives.FONT, 45)
 
 
 def play_sound(file, vol):
@@ -66,16 +77,15 @@ def display_lives(surf, position, live):
     if live == 'player 1':
         live = live_1
         heart_surf = Images.heart
-        Constants.heart_pos = (45, 615)
+        Lives.heart_pos = (45, 615)
     elif live == 'player 2':
         live = live_2
         heart_surf = Images.heart
-        Constants.heart_pos = (820, 75)
-    surf.blit(heart_surf, Constants.heart_pos)
+        Lives.heart_pos = (820, 75)
+    surf.blit(heart_surf, Lives.heart_pos)
     lives_surf = font.render(f'{live}', True, Colors.WHITE)
     lives_rect = lives_surf.get_rect(topleft=position)
     surf.blit(lives_surf, lives_rect)
-
 
 
 def update_live(player):

@@ -1,6 +1,6 @@
 import pygame
 
-from config import Constants, Aim, Images
+from config import Constants, Aim, Images, Lives
 from config import display_lives, update_live
 from players import Player
 from ball import Ball
@@ -9,7 +9,7 @@ from sys import exit
 # screen
 screen = pygame.display.set_mode(Constants.SCREEN_SIZE)
 pygame.display.set_caption("DODGE-BALL INVASION")
-pygame.display.set_icon(pygame.image.load('img/icon.png'))
+pygame.display.set_icon(Images.icon)
 
 # control var of sprite coordinates
 player_1 = Player(30, 300, 'player_1')
@@ -139,8 +139,8 @@ class Game:
         # drawing the objects
         screen.blit(Images.court, Constants.COURT_CORD)
         screen.blit(Aim.scope, (mx - 16, my - 16))
-        display_lives(screen, Constants.P1_LIVE_POS, 'player 1')
-        display_lives(screen, Constants.P2_LIVE_POS, 'player 2')
+        display_lives(screen, Lives.P1_LIVE_POS, 'player 1')
+        display_lives(screen, Lives.P2_LIVE_POS, 'player 2')
         player_1.render(screen)
         player_2.render(screen)
         ball_1.render(screen)

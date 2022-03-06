@@ -1,6 +1,6 @@
 import pygame
 import config
-# from config import live_1
+from config import Images
 
 
 class Ball(pygame.sprite.Sprite):
@@ -12,10 +12,9 @@ class Ball(pygame.sprite.Sprite):
         
         # check image
         if ball_image == 'ball_1':
-            self.image = pygame.image.load("img/ball_1.png")
+            self.image = Images.ball_1
         elif ball_image == 'ball_2':
-            self.image = pygame.image.load("img/ball_2.png")
-
+            self.image = Images.ball_2
 
     def move(self, player):
         if player == 'player_1':
