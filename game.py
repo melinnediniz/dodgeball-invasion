@@ -14,7 +14,8 @@ pygame.display.set_icon(Images.icon)
 # control var of sprite coordinates
 player_1 = Player(30, 300, 'player_1')
 player_2 = Player(900, 300, 'player_2')
-collision = 75
+collision = 50
+collision_2 = 65
 
 
 # Balls
@@ -112,8 +113,8 @@ class Game:
                     
         # ball collision with player_2 (npc)
         if ball_1.position_x > player_2.position_x:
-            if player_2.position_y < ball_1.position_y + collision:
-                if player_2.position_y + collision > ball_1.position_y:
+            if player_2.position_y < ball_1.position_y + collision_2:
+                if player_2.position_y + collision_2 > ball_1.position_y:
                     update_live(2)
                     player_1.hold()
                     player_1.throw_ball = False
