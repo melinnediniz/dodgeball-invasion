@@ -14,7 +14,7 @@ pygame.display.set_icon(Images.icon)
 # control var of sprite coordinates
 player_1 = Player(30, 300, 'player_1')
 player_2 = Player(900, 300, 'player_2')
-collision = 50
+collision = 75
 
 
 # Balls
