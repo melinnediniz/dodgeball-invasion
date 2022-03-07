@@ -1,8 +1,7 @@
 import pygame
 
-import config
 from config import Constants, Aim, Images, Lives
-from config import display_lives, update_live, play_music
+from config import display_lives, update_live, play_music, loser, reset_game, victory
 from players import Player
 from ball import Ball
 from sys import exit
@@ -70,8 +69,7 @@ class Game:
         pygame.display.flip()
 
     # PLAYING THE GAME
-    @staticmethod
-    def main():
+    def main(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -93,9 +91,10 @@ class Game:
                     key_pressed.add('down')
                 elif event.key == pygame.K_SPACE:
                     player_1.throw()
-                elif event.key == pygame.K_m and pygame.mixer.music.get_busy() == True:
+                elif event.key == pygame.K_m:
+                    if pygame.mixer.music.get_busy():
                         pygame.mixer.music.pause()
-                elif event.key == pygame.K_m and pygame.mixer.music.get_busy() == False:
+                    elif not pygame.mixer.music.get_busy():
                         pygame.mixer.music.unpause()
 
             if event.type == pygame.KEYUP:
@@ -108,76 +107,96 @@ class Game:
                 elif event.key == pygame.K_DOWN:
                     key_pressed.remove('down')
 
-        move_player()
-        if player_1.throw_ball:
-            ball_1.move('player_1')
+        if loser():
+            reset_game(player_1, player_2, ball_1, ball_2)
+            self.current_screen = "win"
 
-        if player_2.throw_ball:
-            ball_2.move('player_2')
+        else:
+            move_player()
+            if player_1.throw_ball:
+                ball_1.move('player_1')
 
-        # ball collision with player_1
-        if ball_2.position_x <= player_1.position_x:
-            if player_1.position_y < ball_2.position_y + collision:
-                if player_1.position_y + collision > ball_2.position_y:
-                    player_1.hit = True
-                    update_live(1)
-                    player_2.hold()
-                    player_2.throw_ball = False
-                    pygame.time.set_timer(pygame.USEREVENT+1, 300)
-                    if config.live_1 == 8:
-                        config.victory_alien = True
-                        config.victory_1()
+            if player_2.throw_ball:
+                ball_2.move('player_2')
 
-                    
-        # ball collision with player_2 (npc)
-        if ball_1.position_x > player_2.position_x:
-            if player_2.position_y < ball_1.position_y + collision_2:
-                if player_2.position_y + collision_2 > ball_1.position_y:
-                    player_2.hit = True
-                    update_live(2)
-                    player_1.hold()
-                    player_1.throw_ball = False
-                    pygame.time.set_timer(pygame.USEREVENT+1, 300)
-                    if config.live_2 == 8:
-                        config.victory_human = True
-                        config.victory_2()
+            # ball collision with player_1
+            if ball_2.position_x <= player_1.position_x:
+                if player_1.position_y < ball_2.position_y + collision:
+                    if player_1.position_y + collision > ball_2.position_y:
+                            player_1.hit = True
+                            update_live(1)
+                            player_2.hold()
+                            player_2.throw_ball = False
+                            pygame.time.set_timer(pygame.USEREVENT+1, 300)
 
-        player_1.wall_limits()
-        player_2.wall_limits()
+                        
+            # ball collision with player_2 (npc)
+            if ball_1.position_x > player_2.position_x:
+                if player_2.position_y < ball_1.position_y + collision_2:
+                    if player_2.position_y + collision_2 > ball_1.position_y:
+                            player_2.hit = True
+                            update_live(2)
+                            player_1.hold()
+                            player_1.throw_ball = False
+                            pygame.time.set_timer(pygame.USEREVENT+1, 300)
 
-        if ball_1.position_x > 1000:
-            player_1.throw_ball = False
-            player_1.hold()
+            player_1.wall_limits()
+            player_2.wall_limits()
 
-        if ball_2.position_x < 0:
-            player_2.throw_ball = False
-            player_2.hold()
+            if ball_1.position_x > 1000:
+                player_1.throw_ball = False
+                player_1.hold()
 
-        player_2.npc(enemy=player_1, ball_enemy=ball_1)
+            if ball_2.position_x < 0:
+                player_2.throw_ball = False
+                player_2.hold()
 
-        # scope position
-        mx = player_1.position_x + 100
-        my = player_2.position_y + 50
-        if mx >= 968:
-            mx = 968
-        if my >= 668:
-            my = 668
+            player_2.npc(enemy=player_1, ball_enemy=ball_1)
 
-        # drawing the objects
+            # scope position
+            mx = player_1.position_x + 100
+            my = player_2.position_y + 50
+            if mx >= 968:
+                mx = 968
+            if my >= 668:
+                my = 668
+
+
+            # drawing the objects
+            screen.blit(Images.court, Constants.COURT_CORD)
+            screen.blit(Aim.scope, (mx - 16, my - 16))
+            display_lives(screen, Lives.P1_LIVE_POS, 'player 1')
+            display_lives(screen, Lives.P2_LIVE_POS, 'player 2')
+            player_1.render(screen)
+            player_2.render(screen)
+            ball_1.render(screen)
+            ball_2.render(screen)
+
+            # update screen
+            pygame.display.flip()
+
+    def win(self):
+        pygame.mouse.set_visible(True)
+        pygame.mixer.music.stop()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                exit()
+            
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    self.current_screen = "start_screen"
+                    pygame.mixer.music.play(-1)
+
         screen.blit(Images.court, Constants.COURT_CORD)
-        screen.blit(Aim.scope, (mx - 16, my - 16))
-        display_lives(screen, Lives.P1_LIVE_POS, 'player 1')
-        display_lives(screen, Lives.P2_LIVE_POS, 'player 2')
-        player_1.render(screen)
-        player_2.render(screen)
-        ball_1.render(screen)
-        ball_2.render(screen)
-
-        # update screen
+        victory(screen)
         pygame.display.flip()
+        
 
     def change_screen(self):
         if self.current_screen == "start_screen":
             self.start_screen()
         if self.current_screen == "main":
             self.main()
+        if self.current_screen == "win":
+            self.win()
+

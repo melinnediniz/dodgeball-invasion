@@ -7,6 +7,7 @@ class Colors:
     GREEN = (10, 89, 31)
     WHITE = (255, 255, 255)
     BLUE = (0, 110, 230)
+    PLAYER = (196, 70, 20)
 
 
 class Sounds:
@@ -15,7 +16,6 @@ class Sounds:
     HIT_HUMAN = "sound/roblox_death_sound.ogg"
     HUMAN_WIN = "sound/victory1.ogg"
     ET_WIN = "sound/victory2.ogg"
-    HIT_WALL = "sound/hit_wall.ogg"
     BACKGROUND = "sound/music/pika-a-boo_8bit.mp3"
 
 
@@ -25,7 +25,9 @@ class Images:
     icon = pygame.image.load('img/icon.png')
 
     heart = pygame.image.load('img/heart.png')
+    heart_et = pygame.image.load('img/et_heart.png')
     heart = pygame.transform.scale(heart, (65, 65))
+    heart_et = pygame.transform.scale(heart_et, (65, 65))
 
     ball_1 = pygame.image.load("img/ball_1.png")
     ball_2 = pygame.image.load("img/ball_2.png")
@@ -57,16 +59,17 @@ class Constants:
 
 class Lives:
     FONT = "fonts/NormandyBeach.otf"
-    P1_LIVE_POS = (120, 630)
-    P2_LIVE_POS = (770, 80)
     MAX_LIVES = 10
-    heart_pos = (0, 0)
+    P1_LIVE_POS = (120, 630)
+    P2_LIVE_POS = (780, 95)
+
+    p1_heart_pos = (45, 615)
+    p2_heart_pos = (830, 75)
+    heart_pos = ()
 
 
 # Global variables
 game_loop = True
-victory_alien = True
-victory_human = True
 count = True
 live_1 = Lives.MAX_LIVES
 live_2 = Lives.MAX_LIVES
@@ -75,8 +78,9 @@ count_down = 5
 # ------- FUNCTIONS
 pygame.init()
 font = pygame.font.Font(Lives.FONT, 45)
+font_live = pygame.font.Font(Lives.FONT, 45)
+font_name = pygame.font.Font(Lives.FONT, 30)
 font_2 = pygame.font.Font(Constants.FONT_2, 64)
-font_3 = pygame.font.Font(Constants.FONT_2, 18)
 
 
 def play_sound(file, vol):
@@ -90,95 +94,63 @@ def play_music():
         pygame.mixer.music.play(-1)
         pygame.mixer.music.set_volume(0.2)
 
+def loser():
+    loser = 0
+    global live_1, live_2
+    if live_1 == 0:
+        loser = 1
+        print('player 2 win')
+    elif live_2 == 0:
+        loser = 2
+        print('player 1 win')
+    print(loser)
+    return loser
 
-def victory_1():
-    global victory_alien
-    while victory_alien:
-        endgame2()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    reset_game()
-                    pygame.time.wait(500)
-                    victory_alien = False
-                elif event.key == pygame.K_ESCAPE:
-                    exit()
-
-
-def victory_2():
-    global victory_human
-    while victory_human:
-        endgame1()
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_r:
-                    reset_game()
-                    pygame.time.wait(500)
-                    victory_human = False
-                elif event.key == pygame.K_ESCAPE:
-                    exit()
-            if event.type == pygame.QUIT:
-                exit()
-
-
-def endgame1():
-    lock()
-    victory_h()
-    restart()
-    pygame.display.flip()
-
-
-def endgame2():
-    lock()
-    victory_a()
-    restart()
-    pygame.display.flip()
-
-
-def victory_h():
-    human_text = font_2.render('HUMAN WINS', True, Colors.BLUE)
-    human_text_rect = human_text.get_rect()
-    human_text_rect.center = (1000/2, 700/2)
-    game.screen.blit(human_text, human_text_rect)
-
-
-def victory_a():
-    alien_text = font_2.render('ALIEN WINS', True, Colors.GREEN)
-    alien_text_rect = alien_text.get_rect()
-    alien_text_rect.center = (1000/2, 700/2)
-    game.screen.blit(alien_text, alien_text_rect)
-
-
-def restart():
-    restart_text = font_3.render('Press R To Restart or Esc to Finish', True, Colors.BLACK)
-    restart_text_rect = restart_text.get_rect()
-    restart_text_rect.center = (1000/2, 530)
-    game.screen.blit(restart_text, restart_text_rect)
-
+def victory(surf):
+    winner = ''
+    lose = loser()
+    color = Colors.BLACK
+    if live_2 == 0:
+        winner = 'HUMAN'
+        color = Colors.BLUE
+        play_sound(Sounds.HUMAN_WIN, 0.5)
+    elif live_1 == 0:
+        winner = 'ALIEN'
+        color = Colors.GREEN
+        play_sound(Sounds.ET_WIN, 0.5)
+    
+    text = font_2.render(f'{winner} WINS', True, color)
+    text_rect = text.get_rect(midbottom=(1000/2, 700/2))
+    restart_text = font_2.render('Press R To Restart or Esc to Finish', True, Colors.BLACK)
+    restart_text_rect = restart_text.get_rect(midbottom=(1000/2, 530))
+    surf.blit(restart_text, restart_text_rect)
+    surf.blit(text, text_rect)
 
 def display_lives(surf, position, live):
     heart_surf = Images.heart
+    name = ''
+    text_pos = ()
     if live == 'player 1':
         live = live_1
-        Lives.heart_pos = (45, 615)
+        name = 'HUMAN'
+        Lives.heart_pos = Lives.p1_heart_pos
+        text_pos = (120, 600)
     elif live == 'player 2':
         live = live_2
-        Lives.heart_pos = (820, 75)
-    surf.blit(heart_surf, Lives.heart_pos)
-    lives_surf = font.render(f'{live}', True, Colors.WHITE)
+        name = 'ALIEN'
+        text_pos = (745, 70)
+        Lives.heart_pos = Lives.p2_heart_pos
+        heart_surf = Images.heart_et
+
+    player_surf = font_name.render(name, True, Colors.PLAYER)
+    player_rect = player_surf.get_rect(topleft=text_pos)
+
+    lives_surf = font_live.render(f'{live}', True, Colors.WHITE)
     lives_rect = lives_surf.get_rect(topleft=position)
+
     surf.blit(lives_surf, lives_rect)
-
-
-def lock():
-    game.screen.blit(Images.court, Constants.COURT_CORD)
-    pygame.mouse.set_visible(True)
-    display_lives(game.screen, Lives.P1_LIVE_POS, 'player 1')
-    display_lives(game.screen, Lives.P2_LIVE_POS, 'player 2')
-    game.player_1.render(game.screen)
-    game.player_2.render(game.screen)
+    surf.blit(player_surf, player_rect)
+    surf.blit(heart_surf, Lives.heart_pos)
 
 
 def update_live(player):
@@ -191,12 +163,12 @@ def update_live(player):
         play_sound(Sounds.HIT_ET, 0.1)
 
 
-def reset_game():
+def reset_game(player_1, player_2, ball_1, ball_2):
     global live_1, live_2
     live_1 = Lives.MAX_LIVES
     live_2 = Lives.MAX_LIVES
-    game.player_1.position_x, game.player_1.position_y = 30, 300
-    game.player_2.position_x, game.player_2.position_y = 900, 300
-    game.ball_1.position_x, game.ball_1.position_y = 30, 325
-    game.ball_2.position_x, game.ball_2.position_y = 730, 325
+    player_1.position_x, player_1.position_y = 30, 300
+    player_2.position_x, player_2.position_y = 900, 300
+    ball_1.position_x, ball_1.position_y = 30, 325
+    ball_2.position_x, ball_2.position_y = 730, 325
     pygame.display.flip()
