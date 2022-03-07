@@ -93,9 +93,9 @@ class Game:
                     key_pressed.add('down')
                 elif event.key == pygame.K_SPACE:
                     player_1.throw()
-                elif event.key == pygame.K_m and pygame.mixer.music.get_busy():
+                elif event.key == pygame.K_m and pygame.mixer.music.get_busy() == True:
                         pygame.mixer.music.pause()
-                elif event.key == pygame.K_m and not pygame.mixer.music.get_busy():
+                elif event.key == pygame.K_m and pygame.mixer.music.get_busy() == False:
                         pygame.mixer.music.unpause()
 
             if event.type == pygame.KEYUP:
