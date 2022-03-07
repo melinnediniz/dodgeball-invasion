@@ -64,6 +64,7 @@ class Player:
     def moves(self, direction):
         if not self.throw_ball:
             self.hold()
+            
         match direction:
             case 'up':
                 self.position_y -= self.speed
@@ -80,7 +81,8 @@ class Player:
         else:
             surface.blit(self.image_hit, (self.position_x, self.position_y))
 
-    def npc(self, enemy, ball_enemy):
+
+    def npc(self, enemy):
 
         def move_npc():
             self.speed = config.Constants.SPEED_NPC
@@ -109,3 +111,4 @@ class Player:
                     self.moves('right')
 
         move_npc()
+        

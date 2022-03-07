@@ -148,6 +148,7 @@ def display_lives(surf, position, live):
     heart_surf = Images.heart
     name = ''
     text_pos = ()
+
     if live == 'player 1':
         live = live_1
         name = 'HUMAN'
@@ -173,6 +174,7 @@ def display_lives(surf, position, live):
 
 def update_live(player):
     global live_1, live_2
+
     if player == 1 and live_1 > 0:
         live_1 -= 1
         play_sound(Sounds.HIT_HUMAN, 0.2)

@@ -131,7 +131,7 @@ class Game:
                     key_pressed.add('down')
 
                 if event.type == pygame.JOYBUTTONDOWN:
-                    button_shot = joystick.get_button(5)
+                    button_shot = joystick.get_button(0)
                     if button_shot == 1:
                         player_1.throw()
 
@@ -179,7 +179,7 @@ class Game:
                 player_2.throw_ball = False
                 player_2.hold()
 
-            player_2.npc(enemy=player_1, ball_enemy=ball_1)
+            player_2.npc(enemy=player_1)
 
             # scope position
             mx = player_1.position_x + 300

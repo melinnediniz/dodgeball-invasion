@@ -13,9 +13,9 @@
 ## 💻 Pré-requisitos
 
 Antes de começar, verifique se você atendeu aos seguintes requisitos:
-* Você instalou a versão mais recente da linguagem [Python](https://www.python.org/downloads/)
+* Você instalou no mínimo versão ``1.10`` da linguagem [Python](https://www.python.org/downloads/)
 * Você tem uma máquina `<Windows / Linux / Mac>`.
-* Você instalou o ``pygame``
+* Você instalou no mínimo a versão 2.3 da biblioteca ``pygame``
 
 ## 🚀 Instalando DODGEBALL INVASION
 
@@ -52,11 +52,15 @@ $ python main.py
 
 |  Player 1     |Comandos  |
 | ------------- | -------- |
-| Up            |   Cima   |
-| Down          |  Baixo   |
-| Espaço        |  Atirar  |
+| Up            |        Cima             |
+| Down          |        Baixo            |
+| Left          |       Esquerda          |
+| Right         |       Direita           |
+| Espaço        |  Atirar / Iniciar jogo |
+| R             |         Resetar         |
+| M             |  Mutar / Desmutar música  |
 
-## 🤝 Colaboradores
+## 👥 Colaboradores
 
 Os desenvolvedores do jogo são:
 
@@ -75,4 +79,9 @@ Os desenvolvedores do jogo são:
 Esse projeto está sob licença. Veja o arquivo [LICENÇA](LICENSE.md) para mais detalhes.
 #
 
-⚠️ **As artes e os efeitos sonoros utilizados são de autoria dos desenvolvedores**
+## 🤝 Créditos
+
+* [DARNU](https://darnuweb.blogspot.com/p/8-bits.html)
+* [FREESOUND](https://freesound.org)
+
+⚠️ **As artes e a maioria dos efeitos sonoros utilizados são de autoria dos desenvolvedores**
