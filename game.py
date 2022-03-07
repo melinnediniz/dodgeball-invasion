@@ -17,6 +17,12 @@ player_2 = Player(900, 300, 'player_2')
 collision = 50
 collision_2 = 65
 
+# check if joystick is connected
+joy_check = pygame.joystick.get_count()
+if joy_check == 1:
+    pygame.joystick.init()  # initiate joystick functions
+    joystick = pygame.joystick.Joystick(0)  # get first joystick
+
 
 # Balls
 ball_1 = Ball(position_x=240,
@@ -106,6 +112,27 @@ class Game:
                     key_pressed.remove('up')
                 elif event.key == pygame.K_DOWN:
                     key_pressed.remove('down')
+
+            if joy_check == 1:
+                axis_0 = joystick.get_axis(0)
+                axis_1 = joystick.get_axis(1)
+                if -0.5 < axis_0 < 0:
+                    key_pressed.clear()
+                if -0.5 < axis_1 < 0:
+                    key_pressed.clear()
+                if axis_0 < -0.5:
+                    key_pressed.add('left')
+                if axis_0 > 0.5:
+                    key_pressed.add('right')
+                if axis_1 < -0.5:
+                    key_pressed.add('up')
+                if axis_1 > 0.5:
+                    key_pressed.add('down')
+
+                if event.type == pygame.JOYBUTTONDOWN:
+                    button_shot = joystick.get_button(5)
+                    if button_shot == 1:
+                        player_1.throw()
 
         if loser():
             reset_game(player_1, player_2, ball_1, ball_2)
