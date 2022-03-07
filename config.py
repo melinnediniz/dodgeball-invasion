@@ -115,11 +115,12 @@ def victory(surf, loser):
     winner = ''
     message = ''
     color = Colors.BLACK
-    sound = Sounds.HUMAN_WIN
+    sound = None
     if loser == 2:
         winner = 'HUMANS'
         color = Colors.BLUE
         message = 'THE WORLD IS A SAFE PLACE AGAIN!'
+        sound = Sounds.HUMAN_WIN
     elif loser == 1:
         winner = 'ALIENS'
         color = Colors.GREEN
@@ -127,7 +128,7 @@ def victory(surf, loser):
         message = 'OH NO! IS THIS THE END OF THE WORLD?'
 
     if win_sound is True:
-        play_sound(sound, 0.5)
+        play_sound(sound, 0.3)
         win_sound = False
 
     win_text = font_2.render(f'{winner} WON', True, color)
