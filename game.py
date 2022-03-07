@@ -131,7 +131,7 @@ class Game:
                     key_pressed.add('down')
 
                 if event.type == pygame.JOYBUTTONDOWN:
-                    button_shot = joystick.get_button(5)
+                    button_shot = joystick.get_button(0)
                     if button_shot == 1:
                         player_1.throw()
 
