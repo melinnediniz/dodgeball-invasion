@@ -124,7 +124,7 @@ class Game:
                     player_2.hold()
                     player_2.throw_ball = False
                     pygame.time.set_timer(pygame.USEREVENT+1, 300)
-                    if config.live_1 == 8:
+                    if config.live_1 == 0:
                         config.victory_alien = True
                         config.victory_1()
 
@@ -138,7 +138,7 @@ class Game:
                     player_1.hold()
                     player_1.throw_ball = False
                     pygame.time.set_timer(pygame.USEREVENT+1, 300)
-                    if config.live_2 == 8:
+                    if config.live_2 == 0:
                         config.victory_human = True
                         config.victory_2()
 
