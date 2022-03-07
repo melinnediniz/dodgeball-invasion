@@ -15,6 +15,7 @@ pygame.display.set_icon(Images.icon)
 player_1 = Player(30, 300, 'player_1')
 player_2 = Player(900, 300, 'player_2')
 collision = 50
+hit_box = 10
 
 
 # check if joystick is connected
@@ -150,7 +151,7 @@ class Game:
 
             # ball collision with player_1
             if ball_2.position_x < player_1.position_x:
-                if player_1.position_y < ball_2.position_y:
+                if player_1.position_y < ball_2.position_y + hit_box:
                     if player_1.position_y + collision > ball_2.position_y:
                         player_1.hit = True
                         update_live(1)
@@ -160,7 +161,7 @@ class Game:
 
             # ball collision with player_2 (npc)
             if ball_1.position_x > player_2.position_x:
-                if player_2.position_y < ball_1.position_y:
+                if player_2.position_y < ball_1.position_y + hit_box:
                     if player_2.position_y + collision > ball_1.position_y:
                         player_2.hit = True
                         update_live(2)
