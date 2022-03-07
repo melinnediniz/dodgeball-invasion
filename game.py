@@ -15,7 +15,7 @@ pygame.display.set_icon(Images.icon)
 player_1 = Player(30, 300, 'player_1')
 player_2 = Player(900, 300, 'player_2')
 collision = 75
-hit_box = 10
+hit_box = 5
 
 
 # check if joystick is connected
