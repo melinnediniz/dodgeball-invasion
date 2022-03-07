@@ -55,6 +55,7 @@ player_2.get_ball(ball_2)
 pygame.mouse.set_visible(False)
 
 play_music()
+lose = 0
 
 class Game:
     def __init__(self):
@@ -76,6 +77,7 @@ class Game:
 
     # PLAYING THE GAME
     def main(self):
+        global lose
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -135,6 +137,7 @@ class Game:
                         player_1.throw()
 
         if loser():
+            lose = loser()
             reset_game(player_1, player_2, ball_1, ball_2)
             self.current_screen = "win"
 
@@ -205,6 +208,7 @@ class Game:
     def win(self):
         pygame.mouse.set_visible(True)
         pygame.mixer.music.stop()
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
@@ -215,7 +219,11 @@ class Game:
                     pygame.mixer.music.play(-1)
 
         screen.blit(Images.court, Constants.COURT_CORD)
-        victory(screen)
+
+        if lose == 2:
+            victory(screen, 2)
+        elif lose == 1:
+            victory(screen, 1)
         pygame.display.flip()
         
 
@@ -226,4 +234,3 @@ class Game:
             self.main()
         if self.current_screen == "win":
             self.win()
-

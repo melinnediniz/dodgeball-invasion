@@ -65,7 +65,6 @@ class Player:
     def moves(self, direction):
         if not self.throw_ball:
             self.hold()
-        print(self.position_y)
         match direction:
             case 'up':
                 self.position_y -= self.speed

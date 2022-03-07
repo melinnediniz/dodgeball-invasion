@@ -1,5 +1,4 @@
 import pygame
-import game
 
 
 class Colors:
@@ -8,13 +7,14 @@ class Colors:
     WHITE = (255, 255, 255)
     BLUE = (0, 110, 230)
     PLAYER = (196, 70, 20)
+    WIN_MSG = (115, 14, 2)
 
 
 class Sounds:
     THROW_BALL = "sound/throw.ogg"
     HIT_ET = "sound/hit_et.ogg"
     HIT_HUMAN = "sound/roblox_death_sound.ogg"
-    HUMAN_WIN = "sound/victory1.ogg"
+    HUMAN_WIN = "sound/human_win.ogg"
     ET_WIN = "sound/victory2.ogg"
     BACKGROUND = "sound/music/pika-a-boo_8bit.mp3"
 
@@ -54,12 +54,13 @@ class Constants:
     SPEED_NPC = 14
 
     COURT_CORD = (0, 0)
+    FONT = 'fonts/PressStart2P-Regular.ttf'
     FONT_2 = "fonts/INVASION2000.ttf"
 
 
 class Lives:
     FONT = "fonts/NormandyBeach.otf"
-    MAX_LIVES = 10
+    MAX_LIVES = 5
     P1_LIVE_POS = (120, 630)
     P2_LIVE_POS = (780, 95)
 
@@ -70,10 +71,9 @@ class Lives:
 
 # Global variables
 game_loop = True
-count = True
+win_sound = True
 live_1 = Lives.MAX_LIVES
 live_2 = Lives.MAX_LIVES
-count_down = 5
 
 # ------- FUNCTIONS
 pygame.init()
@@ -81,6 +81,7 @@ font = pygame.font.Font(Lives.FONT, 45)
 font_live = pygame.font.Font(Lives.FONT, 45)
 font_name = pygame.font.Font(Lives.FONT, 30)
 font_2 = pygame.font.Font(Constants.FONT_2, 64)
+font_msg = pygame.font.Font(Constants.FONT, 20)
 
 
 def play_sound(file, vol):
@@ -106,25 +107,38 @@ def loser():
     print(loser)
     return loser
 
-def victory(surf):
+def victory(surf, loser):
+    global win_sound
     winner = ''
-    lose = loser()
+    message = ''
     color = Colors.BLACK
-    if live_2 == 0:
-        winner = 'HUMAN'
+    sound = Sounds.HUMAN_WIN
+    if loser == 2:
+        winner = 'HUMANS'
         color = Colors.BLUE
-        play_sound(Sounds.HUMAN_WIN, 0.5)
-    elif live_1 == 0:
-        winner = 'ALIEN'
+        message = 'THE WORLD IS A SAFE PLACE AGAIN!'
+    elif loser == 1:
+        winner = 'ALIENS'
         color = Colors.GREEN
-        play_sound(Sounds.ET_WIN, 0.5)
+        sound = Sounds.ET_WIN
+        message = 'OH NO! IS THIS THE END OF THE WORLD?'
     
-    text = font_2.render(f'{winner} WINS', True, color)
-    text_rect = text.get_rect(midbottom=(1000/2, 700/2))
-    restart_text = font_2.render('Press R To Restart or Esc to Finish', True, Colors.BLACK)
+    if win_sound is True:
+        play_sound(sound, 0.2)
+        win_sound = False
+    
+    win_text = font_2.render(f'{winner} WON', True, color)
+    win_text_rect = win_text.get_rect(midbottom=(1000/2, 700/2))
+    restart_text = font_name.render("PRESS 'R' TO RESET", True, Colors.BLACK)
     restart_text_rect = restart_text.get_rect(midbottom=(1000/2, 530))
+    
+    message_surf = font_msg.render(message, True, Colors.WIN_MSG)
+    message_rect = message_surf.get_rect()
+    message_rect.center = (1000/2, 400)
+    
     surf.blit(restart_text, restart_text_rect)
-    surf.blit(text, text_rect)
+    surf.blit(win_text, win_text_rect)
+    surf.blit(message_surf, message_rect)
 
 def display_lives(surf, position, live):
     heart_surf = Images.heart
