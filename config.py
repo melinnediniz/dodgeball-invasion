@@ -36,7 +36,7 @@ class Images:
     player_1_hit = pygame.image.load('img/player_1_hit.png')
 
     player_2 = pygame.image.load('img/player_2.png')
-    player_2_hit= pygame.image.load('img/player_2_hit.png')
+    player_2_hit = pygame.image.load('img/player_2_hit.png')
 
 
 class Aim:
@@ -48,7 +48,7 @@ class Aim:
 class Constants:
     CLOCK_TICK = 60
     SCREEN_SIZE = (1000, 700)
-    
+
     SPEED_BALL = 25
     SPEED_PLAYER = 8
     SPEED_NPC = 14
@@ -85,15 +85,17 @@ font_msg = pygame.font.Font(Constants.FONT, 20)
 
 
 def play_sound(file, vol):
-        sound = pygame.mixer.Sound(file)
-        sound.set_volume(vol)
-        sound.play()
+    sound = pygame.mixer.Sound(file)
+    sound.set_volume(vol)
+    sound.play()
+
 
 def play_music():
-        pygame.mixer.init()
-        pygame.mixer.music.load(Sounds.BACKGROUND)
-        pygame.mixer.music.play(-1)
-        pygame.mixer.music.set_volume(0.2)
+    pygame.mixer.init()
+    pygame.mixer.music.load(Sounds.BACKGROUND)
+    pygame.mixer.music.play(-1)
+    pygame.mixer.music.set_volume(0.2)
+
 
 def loser():
     loser = 0
@@ -106,6 +108,7 @@ def loser():
         print('player 1 win')
     print(loser)
     return loser
+
 
 def victory(surf, loser):
     global win_sound
@@ -122,23 +125,24 @@ def victory(surf, loser):
         color = Colors.GREEN
         sound = Sounds.ET_WIN
         message = 'OH NO! IS THIS THE END OF THE WORLD?'
-    
+
     if win_sound is True:
-        play_sound(sound, 0.2)
+        play_sound(sound, 0.5)
         win_sound = False
-    
+
     win_text = font_2.render(f'{winner} WON', True, color)
-    win_text_rect = win_text.get_rect(midbottom=(1000/2, 700/2))
+    win_text_rect = win_text.get_rect(midbottom=(1000 / 2, 700 / 2))
     restart_text = font_name.render("PRESS 'R' TO RESET", True, Colors.BLACK)
-    restart_text_rect = restart_text.get_rect(midbottom=(1000/2, 530))
-    
+    restart_text_rect = restart_text.get_rect(midbottom=(1000 / 2, 530))
+
     message_surf = font_msg.render(message, True, Colors.WIN_MSG)
     message_rect = message_surf.get_rect()
-    message_rect.center = (1000/2, 400)
-    
+    message_rect.center = (1000 / 2, 400)
+
     surf.blit(restart_text, restart_text_rect)
     surf.blit(win_text, win_text_rect)
     surf.blit(message_surf, message_rect)
+
 
 def display_lives(surf, position, live):
     heart_surf = Images.heart
@@ -178,7 +182,8 @@ def update_live(player):
 
 
 def reset_game(player_1, player_2, ball_1, ball_2):
-    global live_1, live_2
+    global live_1, live_2, win_sound
+    win_sound = True
     live_1 = Lives.MAX_LIVES
     live_2 = Lives.MAX_LIVES
     player_1.position_x, player_1.position_y = 30, 300

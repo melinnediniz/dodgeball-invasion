@@ -23,7 +23,6 @@ if joy_check == 1:
     pygame.joystick.init()  # initiate joystick functions
     joystick = pygame.joystick.Joystick(0)  # get first joystick
 
-
 # Balls
 ball_1 = Ball(position_x=240,
               position_y=325,
@@ -50,12 +49,12 @@ def move_player():
 player_1.get_ball(ball_1)
 player_2.get_ball(ball_2)
 
-
 # mouse invisible
 pygame.mouse.set_visible(False)
 
 play_music()
 lose = 0
+
 
 class Game:
     def __init__(self):
@@ -82,10 +81,10 @@ class Game:
             if event.type == pygame.QUIT:
                 exit()
 
-            if event.type == pygame.USEREVENT+1: 
-                if player_1.hit == True:
+            if event.type == pygame.USEREVENT + 1:
+                if player_1.hit is True:
                     player_1.hit = False
-                elif player_2.hit == True:
+                elif player_2.hit is True:
                     player_2.hit = False
 
             if event.type == pygame.KEYDOWN:
@@ -153,22 +152,21 @@ class Game:
             if ball_2.position_x <= player_1.position_x:
                 if player_1.position_y < ball_2.position_y + collision:
                     if player_1.position_y + collision > ball_2.position_y:
-                            player_1.hit = True
-                            update_live(1)
-                            player_2.hold()
-                            player_2.throw_ball = False
-                            pygame.time.set_timer(pygame.USEREVENT+1, 300)
+                        player_1.hit = True
+                        update_live(1)
+                        player_2.hold()
+                        player_2.throw_ball = False
+                        pygame.time.set_timer(pygame.USEREVENT + 1, 300)
 
-                        
             # ball collision with player_2 (npc)
             if ball_1.position_x > player_2.position_x:
                 if player_2.position_y < ball_1.position_y + collision_2:
                     if player_2.position_y + collision_2 > ball_1.position_y:
-                            player_2.hit = True
-                            update_live(2)
-                            player_1.hold()
-                            player_1.throw_ball = False
-                            pygame.time.set_timer(pygame.USEREVENT+1, 300)
+                        player_2.hit = True
+                        update_live(2)
+                        player_1.hold()
+                        player_1.throw_ball = False
+                        pygame.time.set_timer(pygame.USEREVENT + 1, 300)
 
             player_1.wall_limits()
             player_2.wall_limits()
@@ -191,7 +189,6 @@ class Game:
             if my >= 668:
                 my = 668
 
-
             # drawing the objects
             screen.blit(Images.court, Constants.COURT_CORD)
             screen.blit(Aim.scope, (mx - 16, my - 16))
@@ -212,7 +209,7 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 exit()
-            
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     self.current_screen = "start_screen"
@@ -225,7 +222,6 @@ class Game:
         elif lose == 1:
             victory(screen, 1)
         pygame.display.flip()
-        
 
     def change_screen(self):
         if self.current_screen == "start_screen":
