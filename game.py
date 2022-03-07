@@ -140,6 +140,7 @@ class Game:
             lose = loser()
             reset_game(player_1, player_2, ball_1, ball_2)
             self.current_screen = "win"
+            key_pressed.clear()
 
         else:
             move_player()
