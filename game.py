@@ -179,7 +179,7 @@ class Game:
                 player_2.throw_ball = False
                 player_2.hold()
 
-            player_2.npc(enemy=player_1, ball_enemy=ball_1)
+            player_2.npc(enemy=player_1)
 
             # scope position
             mx = player_1.position_x + 300
